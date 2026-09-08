@@ -52,17 +52,22 @@
 
 ## 阶段 2：官方插件（纯开发机网络联调）
 
-- [ ] `plugin-webdav`：PROPFIND 遍历（infinity，降级逐层）、fingerprint 策略（etag / mtime_size）、GET + Range 断点续传、写 destPath
-- [ ] `plugin-git`：`git ls-remote` 轮询、缓存仓库 `fetch --depth 1`、worktree 遍历生成 Manifest、凭证（token / SSH keyFile + `${ENV}` 展开）
-- [ ] 真实源联调（**需用户提供**：测试 WebDAV 地址+账号；测试 Git 仓库，公共仓库可先行）
-- [ ] 插件协议一致性测试（schema 校验、超时、错误退出码路径）
+- [x] `pkg/pluginkit`：插件公共骨架（行协议主循环、带码错误、SafeJoin、CopyWithHash、源级指纹合成）
+- [x] `plugin-webdav`：PROPFIND 遍历（infinity + 403/400 降级逐层 BFS）、href 三策略消歧（绝对路径 / 挂载点相对 / 当前目录相对）、fingerprint 策略（etag / mtime_size）、GET + Range 断点续传（size 不符自动全量重试）、Basic Auth（password / passwordEnv）
+- [x] `plugin-git`：`git ls-remote` 轮询、缓存仓库 init/fetch `--depth 1`（token 只经命令行不落盘）、`ls-files` blob hash 生成 Manifest、commit hash 短路、symlink 内容拉取、SSH keyFile（GIT_SSH_COMMAND）、认证错误分类
+- [x] 本地联调（真实内核驱动双任务）：WebDAV 本地服务器 + 本地 git 仓库
+- [x] 测试：webdav 7 项（快照/变更检测/Depth 降级/认证/指纹策略/options 校验/Range 续传）；git 6 项（快照/新 commit 检测/缺失分支/缺 options/buildAuthURL/token 校验）
+- [ ] 真实远端源联调（**待用户提供**：测试 WebDAV 地址+账号；测试 Git 仓库）
+- [ ] 大文件（≥100MB）真实下载与中断重试（依赖真实源联调）
 
-**验收**：
-1. 真实 WebDAV：首次全量拉取 → 远端改文件 → 下一轮仅拉取变更文件
-2. 真实 Git：push 新 commit → 下一轮检测并拉取；无新 commit 时 ls-remote 短路零下载
-3. 大文件（≥100MB）下载稳定，中断后重试成功
+**验收**（本地部分全部通过）：
+1. ✅ 本地 WebDAV：首次全量（2 文件）→ 远端改 1 文件 → 下一轮仅拉取该文件（totalFiles 2+1）
+2. ✅ 本地 Git：新 commit 检测并拉取；无新 commit 时 ls-remote + commit hash 双重短路零下载
+3. ⏳ 大文件下载稳定（Range 续传逻辑已由单测验证，10KB 级）；≥100MB 级验证待真实源
 
-**状态**：未开始
+**状态**：本地部分已完成；真实源联调待用户提供信息后补验收
+
+**备注**：调试中沉淀的两个 WebDAV 兼容性要点已固化在代码注释——① href 可能是「挂载点相对路径」（如 x/net/webdav StripPrefix 行为）需拼回 base 前缀；② 相对引用优先按「相对 WebDAV 根」解释（主流实现形态），其次才是 RFC 3986 相对当前目录。
 
 ---
 
