@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "manifest.schema.json",
+  "title": "edge-sync plugin protocol - Manifest",
+  "definitions": {
+    "fileEntry": {
+      "type": "object",
+      "required": ["path", "fingerprint"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/).+$",
+          "description": "相对路径，'/' 分隔，不以 '/' 开头；仅文件，不含目录"
+        },
+        "fingerprint": {
+          "type": "string",
+          "minLength": 1,
+          "description": "插件自定义（blob hash / ETag / mtime+size），内核仅做字符串相等比较"
+        },
+        "size": { "type": "integer", "minimum": 0 },
+        "mtime": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": "object",
+      "required": ["entries"],
+      "properties": {
+        "entries": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/fileEntry" }
+        },
+        "manifestFingerprint": {
+          "type": "string",
+          "description": "源级整体指纹（如 git commit hash），内核可借以跳过 diff"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

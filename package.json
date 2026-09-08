@@ -1,0 +1,20 @@
+{
+  "name": "edge-sync",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Edge sync backup service for Raspberry Pi 2B: Go kernel + TS outer layer + external-process plugins",
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "kernel:build": "go build ./...",
+    "kernel:test": "go test ./..."
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

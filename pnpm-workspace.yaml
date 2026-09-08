@@ -1,0 +1,6 @@
+packages:
+  - cli
+  - protocol
+  - panel/*
+allowBuilds:
+  esbuild: set this to true or false

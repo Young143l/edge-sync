@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "methods.schema.json",
+  "title": "edge-sync plugin protocol - methods",
+  "definitions": {
+    "initializeParams": {
+      "type": "object",
+      "required": ["protocolVersion"],
+      "properties": {
+        "protocolVersion": { "const": 1 }
+      },
+      "additionalProperties": false
+    },
+    "initializeResult": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" },
+        "configSchema": {
+          "type": "object",
+          "description": "任务 options 的 JSON Schema 片段，供 CLI/面板做配置校验提示"
+        }
+      },
+      "additionalProperties": false
+    },
+    "snapshotParams": {
+      "type": "object",
+      "required": ["config"],
+      "properties": {
+        "config": { "type": "object", "description": "任务 options 原样透传" }
+      },
+      "additionalProperties": false
+    },
+    "snapshotResult": {
+      "$ref": "manifest.schema.json#/definitions/manifest"
+    },
+    "fetchFileParams": {
+      "type": "object",
+      "required": ["config", "path", "destPath"],
+      "properties": {
+        "config": { "type": "object" },
+        "path": { "type": "string", "minLength": 1 },
+        "destPath": {
+          "type": "string",
+          "minLength": 1,
+          "description": "插件将文件写至此路径（先写临时文件再 rename），父目录由插件创建"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fetchFileResult": {
+      "type": "object",
+      "required": ["size"],
+      "properties": {
+        "size": { "type": "integer", "minimum": 0 },
+        "checksum": { "type": "string", "description": "建议 sha256 hex，内核据此校验" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,19 @@
+# Node / pnpm
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Go build artifacts
+edge-syncd
+plugin-git
+plugin-webdav
+plugin-mock
+*.test
+
+# Deploy / local
+.env
+.env.*
+*.local
+
+# OS
+.DS_Store

@@ -1,0 +1,16 @@
+{
+  "name": "@edge-sync/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "edge-sync plugin protocol types (TS side; single source of truth is schema/*.schema.json)",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
