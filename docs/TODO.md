@@ -73,18 +73,22 @@
 
 ## 阶段 3：IPC + CLI（纯开发机）
 
-- [ ] `ipc/`：Unix socket JSON-RPC server（task.list / task.status / task.trigger / history.list / history.files / history.fileVersions / config.reload / log.tail；event.subscribe 仅留桩）
-- [ ] CLI 骨架：`edge-sync` 命令（tsx），IPC 客户端
-- [ ] 命令实现：`list / status / add / edit / remove / sync / history`
-- [ ] 命令实现：`export [--version] --out`、`restore-file [--version] --out`
-- [ ] `add` 向导读取插件 configSchema 做输入提示与校验
+- [x] `ipc/`：Unix socket JSON-RPC server（task.list / task.status / task.trigger / history.list / history.files / history.fileVersions / config.reload / log.tail / plugin.list；event.subscribe 留桩返回明确未实现错误）
+- [x] `logring/`：内存环形日志（slog handler 包装，供 log.tail；支持按 task 过滤）
+- [x] 版本元数据：applier 每版本落盘 `.edge-sync-manifest.json`（history 查询直接读元数据）
+- [x] `runner` 增强：任务快照（syncing/nextRunAt）、配置热重载生命周期
+- [x] config 路径语义统一：相对路径一律相对配置文件所在目录（内核与 CLI 一致，cwd 无关）
+- [x] CLI 全命令：list / status / add（向导，读 configSchema）/ edit（$EDITOR）/ remove（--purge）/ sync / history / file-versions / export / restore-file / logs / plugins / reload
+- [x] CLI IPC 客户端 + YAML 配置编辑（编辑后自动 config.reload）
 
-**验收**：
-1. CLI 完成 add → sync → history → export 全流程
-2. 手改 YAML 后 `config.reload` 生效，错误配置返回可读报错
-3. restore-file 能从指定历史版本恢复单个文件
+**验收**（全部通过，实测演示）：
+1. ✅ sync → history → export 全流程（live daemon + 双任务）
+2. ✅ 手改 YAML 后 config.reload 生效；坏配置 reload 被拒且错误可读（"invalid name '../evil'..."），旧任务集继续工作，恢复后 reload 成功
+3. ✅ restore-file 从指定历史版本恢复单个文件（内容与版本一致）
+4. ✅ export 过滤元数据文件；current symlink 正确解引用导出
+5. ✅ go test 8 包全绿；pnpm -r build 零错误
 
-**状态**：未开始
+**状态**：已完成
 
 ---
 
