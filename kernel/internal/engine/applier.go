@@ -6,6 +6,7 @@ package engine
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -22,6 +23,8 @@ import (
 const (
 	versionTimeLayout = "20060102-150405"
 	currentLinkName   = "current"
+	// ManifestFile 每版本目录内的元数据文件（历史查询/单文件版本追溺用）。
+	ManifestFile = ".edge-sync-manifest.json"
 )
 
 // ApplyInput Apply 的输入。
@@ -93,8 +96,39 @@ func Apply(in ApplyInput) (string, error) {
 		return "", fmt.Errorf("recreate staging: %w", err)
 	}
 
+	// 版本元数据：后续 history.list / history.fileVersions 直接读它。
+	if err := writeManifestFile(newDir, in.NewManifest); err != nil {
+		return "", fmt.Errorf("write manifest file: %w", err)
+	}
+
 	committed = true
 	return newDir, nil
+}
+
+func writeManifestFile(versionDir string, m protocol.Manifest) error {
+	type manifestFile struct {
+		ManifestFingerprint string              `json:"manifestFingerprint,omitempty"`
+		Entries             []protocol.FileEntry `json:"entries"`
+	}
+	mf := manifestFile{ManifestFingerprint: m.ManifestFingerprint, Entries: m.Entries}
+	raw, err := json.MarshalIndent(mf, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(filepath.Join(versionDir, ManifestFile), raw, 0o644)
+}
+
+// ReadVersionManifest 读取版本目录内落盘的元数据；不存在返回 nil（老版本）。
+func ReadVersionManifest(versionDir string) *protocol.Manifest {
+	raw, err := os.ReadFile(filepath.Join(versionDir, ManifestFile))
+	if err != nil {
+		return nil
+	}
+	var m protocol.Manifest
+	if err := json.Unmarshal(raw, &m); err != nil {
+		return nil
+	}
+	return &m
 }
 
 // ReadCurrentTarget 返回 data/current 指向的版本目录绝对路径；

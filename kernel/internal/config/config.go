@@ -5,6 +5,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -108,6 +109,8 @@ func expandEnv(data []byte) ([]byte, error) {
 }
 
 // Load 读取、展开、解析、补默认值并校验配置。
+// 相对路径（server.socket / storage.*）以配置文件所在目录为基准解析，
+// 保证内核 cwd 无关、与 CLI 侧约定一致。
 func Load(path string) (*Config, error) {
 	raw, err := os.ReadFile(path)
 	if err != nil {
@@ -122,10 +125,24 @@ func Load(path string) (*Config, error) {
 		return nil, fmt.Errorf("parse %s: %w", path, err)
 	}
 	applyDefaults(&cfg)
+	resolvePaths(&cfg, filepath.Dir(path))
 	if err := validate(&cfg); err != nil {
 		return nil, err
 	}
 	return &cfg, nil
+}
+
+func resolvePaths(cfg *Config, dir string) {
+	abs := func(p string) string {
+		if p == "" || filepath.IsAbs(p) {
+			return p
+		}
+		return filepath.Join(dir, p)
+	}
+	cfg.Server.Socket = abs(cfg.Server.Socket)
+	cfg.Storage.DataDir = abs(cfg.Storage.DataDir)
+	cfg.Storage.StateDir = abs(cfg.Storage.StateDir)
+	cfg.Storage.PluginBinDir = abs(cfg.Storage.PluginBinDir)
 }
 
 func applyDefaults(cfg *Config) {

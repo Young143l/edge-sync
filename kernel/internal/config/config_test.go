@@ -32,15 +32,19 @@ tasks:
 `
 
 func TestLoadDefaults(t *testing.T) {
-	cfg, err := Load(writeCfg(t, validYAML))
+	p := writeCfg(t, validYAML)
+	cfg, err := Load(p)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if cfg.Storage.StateDir != "var/state" {
-		t.Errorf("stateDir default = %q", cfg.Storage.StateDir)
+	// 相对路径以配置文件所在目录为基准解析。
+	wantState := filepath.Join(filepath.Dir(p), "var", "state")
+	if cfg.Storage.StateDir != wantState {
+		t.Errorf("stateDir default = %q, want %q", cfg.Storage.StateDir, wantState)
 	}
-	if cfg.Storage.PluginBinDir != "bin" {
-		t.Errorf("pluginBinDir default = %q", cfg.Storage.PluginBinDir)
+	wantBin := filepath.Join(filepath.Dir(p), "bin")
+	if cfg.Storage.PluginBinDir != wantBin {
+		t.Errorf("pluginBinDir default = %q, want %q", cfg.Storage.PluginBinDir, wantBin)
 	}
 	t2 := cfg.Tasks[1]
 	if t2.Interval.Duration != DefaultInterval {

@@ -39,6 +39,7 @@ type Runner struct {
 	cancel   context.CancelFunc
 	taskCtxs map[string]context.CancelFunc
 	running  map[string]*atomic.Bool
+	nextRun  map[string]time.Time
 	wg       sync.WaitGroup
 	mu       sync.Mutex
 }
@@ -50,6 +51,7 @@ func New(cfg *config.Config, store *state.Store, log *slog.Logger) *Runner {
 		log:      log,
 		taskCtxs: map[string]context.CancelFunc{},
 		running:  map[string]*atomic.Bool{},
+		nextRun:  map[string]time.Time{},
 	}
 }
 
@@ -74,6 +76,7 @@ func (r *Runner) startTask(t *config.Task) {
 	r.mu.Lock()
 	r.taskCtxs[t.Name] = cancel
 	r.running[t.Name] = running
+	r.nextRun[t.Name] = time.Time{} // 重置；loop 启动后 jitter 到点再更新
 	r.mu.Unlock()
 	r.wg.Add(1)
 	go r.loop(ctx, t)
@@ -123,6 +126,7 @@ func (r *Runner) loop(ctx context.Context, t *config.Task) {
 	// 启动 jitter：0 ~ interval*10%，多任务错峰。
 	jitter := time.Duration(rand.Int63n(int64(t.Interval.Duration / 10)))
 	timer := time.NewTimer(jitter)
+	r.recordNextRun(t.Name, time.Now().Add(jitter))
 	failures := 0
 
 	for {
@@ -145,12 +149,35 @@ func (r *Runner) loop(ctx context.Context, t *config.Task) {
 			}
 			r.log.Warn("sync failed", "task", t.Name, "err", err,
 				"consecutive_failures", failures, "next_backoff", next.String())
+			r.recordNextRun(t.Name, time.Now().Add(next))
 			timer.Reset(next)
 			continue
 		}
 		failures = 0
+		r.recordNextRun(t.Name, time.Now().Add(t.Interval.Duration))
 		timer.Reset(t.Interval.Duration)
 	}
+}
+
+func (r *Runner) recordNextRun(name string, at time.Time) {
+	r.mu.Lock()
+	r.nextRun[name] = at
+	r.mu.Unlock()
+}
+
+// IsSyncing 返回任务是否正在同步。
+func (r *Runner) IsSyncing(name string) bool {
+	r.mu.Lock()
+	b := r.running[name]
+	r.mu.Unlock()
+	return b != nil && b.Load()
+}
+
+// NextRunAt 返回任务下次计划运行时间；未知返回零值。
+func (r *Runner) NextRunAt(name string) time.Time {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return r.nextRun[name]
 }
 
 // Sync 同步执行一次任务；任务已在同步中时返回 ErrInProgress。

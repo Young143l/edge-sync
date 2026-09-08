@@ -108,3 +108,63 @@ export interface PluginProtocol {
   snapshot: { params: SnapshotParams; result: SnapshotResult }
   fetchFile: { params: FetchFileParams; result: FetchFileResult }
 }
+
+// ---------- IPC（内核 ⇄ CLI / 面板）----------
+
+/** task.list 条目。 */
+export interface TaskSummary {
+  name: string
+  plugin: string
+  enabled: boolean
+  /** idle | syncing | paused */
+  status: 'idle' | 'syncing' | 'paused'
+  interval: string
+  lastSyncAt?: string
+  lastSuccessAt?: string
+  consecutiveFailures: number
+  nextRunAt?: string
+}
+
+/** task.status 结果。 */
+export interface TaskDetail extends TaskSummary {
+  retention: { keepLast: number; keepDays: number }
+  stats: { totalSyncs: number; totalFiles: number; totalBytes: number }
+}
+
+/** history.list 条目。 */
+export interface VersionInfo {
+  version: string
+  files: number
+  bytes: number
+  isCurrent: boolean
+}
+
+/** history.files 条目。 */
+export interface FileListEntry {
+  name: string
+  isDir: boolean
+  size: number
+  mtime?: string
+}
+
+/** history.fileVersions 条目（仅与上一版本不同的时点，旧→新）。 */
+export interface FileVersionEntry {
+  version: string
+  fingerprint: string
+  size?: number
+}
+
+/** plugin.list 条目。 */
+export interface PluginInfo {
+  name: string
+  version: string
+  configSchema?: Record<string, unknown>
+}
+
+/** log.tail 条目。 */
+export interface LogEntry {
+  time: string
+  level: string
+  msg: string
+  attrs?: string
+}

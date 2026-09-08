@@ -214,3 +214,24 @@ func (c *Client) call(ctx context.Context, method string, params any, result any
 	}
 	return nil
 }
+
+// PluginMeta 插件元信息（initialize 握手结果）。
+type PluginMeta struct {
+	Name         string
+	Version      string
+	ConfigSchema json.RawMessage
+}
+
+// Inspect spawn 插件、握手取元信息后立即退出。供内核 plugin.list 查询。
+func Inspect(ctx context.Context, binPath string) (*PluginMeta, error) {
+	c, err := Start(ctx, binPath, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer c.Close()
+	ir := c.InitResult()
+	if ir == nil {
+		return nil, fmt.Errorf("no initialize result")
+	}
+	return &PluginMeta{Name: ir.Name, Version: ir.Version, ConfigSchema: ir.ConfigSchema}, nil
+}
