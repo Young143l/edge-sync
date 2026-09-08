@@ -26,23 +26,27 @@
 
 ## 阶段 1：内核骨架 + mock 插件端到端（纯开发机）
 
-- [ ] `config/`：YAML 加载、字段校验、`${ENV}` 展开、SIGHUP/IPC 热重载
-- [ ] `plugin/`：插件进程客户端（spawn、行分隔 JSON-RPC、超时控制、stderr 日志采集）
-- [ ] `engine/differ`：Manifest diff（added/modified/removed）+ manifestFingerprint 短路
-- [ ] `engine/applier`：staging 校验 → `versions/<ts>/` 硬链接组装 → `current` symlink 原子切换 → 状态原子写
-- [ ] **retention 保留清理：keepLast（默认 10，数量限制）+ keepDays（可选），current 指向版本始终保留**
-- [ ] `state/`：状态 JSON 原子读写
-- [ ] `scheduler/`：每任务 ticker、启动 jitter、连续失败指数退避（上限 1h）、手动触发复位
-- [ ] mock 插件 `plugins/plugin-mock`：可配置地产生文件变更，用于端到端联调
-- [ ] 单元测试：diff 正确性、applier 原子性、retention 清理边界（keepLast=0/1、keepDays 过期、current 保护）
+- [x] `config/`：YAML 加载、字段校验、`${ENV}` 展开（缺失变量 fail-fast）、SIGHUP 热重载已接线（IPC reload 阶段 3）
+- [x] `plugin/`：插件进程客户端（spawn、行分隔 JSON-RPC、超时 kill + WaitDelay 防管道阻塞、stderr 日志采集）
+- [x] `engine/differ`：Manifest diff（added/modified/removed）
+- [x] `engine/applier`：staging 校验 → `versions/<ts>/` 硬链接组装 → `current` 相对 symlink 原子切换 → 失败自动回滚
+- [x] **retention 保留清理：keepLast（默认 10，数量限制，0=不限）+ keepDays（可选），current 指向版本始终保留且计入预算**
+- [x] `state/`：状态 JSON 原子读写（temp+rename）
+- [x] `scheduler/`（并入 runner）：每任务 ticker、启动 jitter、连续失败指数退避（上限 1h）、手动触发复位
+- [x] mock 插件 → **plugin-local**：本地目录源（sha256 指纹 + manifestFingerprint 短路），既当 mock 又是真实可用的源类型；源级指纹未变时零下载短路
+- [x] 单元测试：diff 正确性、applier 原子性/回滚/硬链接、retention 边界（keepLast 滚动/keepDays 过期/current 保护/外部目录不碰）、config 校验与 ENV、插件客户端（正常/RPC 错误/超时）、runner 端到端
 
-**验收**：
-1. mock 插件连续两轮变更后，`versions/` 出现两个快照，`current` 指向最新
-2. 未变更文件跨版本硬链接（`stat` 链接数 > 1），保留策略按 keepLast 滚动删除旧版本
-3. `kill -9` 内核后重启，本地镜像与状态完整，无半成品
-4. `go test ./...` 全绿
+**验收**（全部通过）：
+1. ✅ 连续两轮变更后 `versions/` 出现两个快照，`current` 指向最新
+2. ✅ 未变更文件跨版本硬链接（实测 nlink=2），keepLast=2 三轮滚动删除旧版本
+3. ✅ `kill -9` 后重启，镜像与状态完整，重启后正确报 "no change"（无重复下载、无半成品）
+4. ✅ `go test ./...` 全绿（engine/plugin/runner/config/state 五包）
 
-**状态**：未开始
+**状态**：已完成
+
+**备注**：
+- Go 协议类型从 `kernel/internal/protocol` 迁至 `pkg/protocol`（internal 可见性限制，插件需复用）；schema 单一真源不变
+- TODO 原定的 `plugin-mock` 实现为 `plugin-local`（本地目录源）：真实 IO、可当正式源类型用，测试直接往 root 写文件制造变更
 
 ---
 
