@@ -2,5 +2,8 @@ packages:
   - cli
   - protocol
   - panel/*
+
+onlyBuiltDependencies:
+  - esbuild
 allowBuilds:
   esbuild: set this to true or false

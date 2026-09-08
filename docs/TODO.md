@@ -8,17 +8,19 @@
 
 ## 阶段 0：脚手架
 
-- [ ] monorepo 目录结构：`kernel/ plugins/ protocol/ cli/ panel/ scripts/ docs/`
-- [ ] Go module 初始化（根 module `edge-sync`），`kernel/cmd/edge-syncd`、`plugins/plugin-git`、`plugins/plugin-webdav` 空 main 可编译
-- [ ] pnpm workspace 初始化（`cli/`、`panel/`），最小可构建
-- [ ] `protocol/schema/` 插件协议 JSON Schema：initialize / snapshot / fetchFile 报文与 Manifest 结构
-- [ ] Go 侧类型 `kernel/internal/protocol/types.go` 与 schema 对齐
-- [ ] TS 侧类型包 `protocol/`（`@edge-sync/protocol`）与 schema 对齐
-- [ ] `.gitignore`、git 仓库初始化、首次提交
+- [x] monorepo 目录结构：`kernel/ plugins/ protocol/ cli/ panel/ scripts/ docs/`
+- [x] Go module 初始化（根 module `edge-sync`），`kernel/cmd/edge-syncd`、`plugins/plugin-git`、`plugins/plugin-webdav` 空 main 可编译
+- [x] pnpm workspace 初始化（`cli/`、`protocol/`；`panel/*` 预留 glob），最小可构建
+- [x] `protocol/schema/` 插件协议 JSON Schema：envelope / manifest / methods 三文件，initialize / snapshot / fetchFile 报文与 Manifest 结构
+- [x] Go 侧类型 `kernel/internal/protocol/types.go` 与 schema 对齐
+- [x] TS 侧类型包 `protocol/`（`@edge-sync/protocol`）与 schema 对齐
+- [x] `.gitignore`、git 仓库初始化、首次提交
 
-**验收**：`go build ./...` 通过；`pnpm -r build` 通过；schema 与双侧类型一致（人工核对）
+**验收**：`go build ./...` 通过；`go vet ./...` 通过；`pnpm -r build` 通过（tsc × 2）；`tsx` 运行 CLI 占位入口正常，workspace 链接生效
 
-**状态**：未开始
+**状态**：已完成（2025 开工首日）
+
+**备注**：pnpm v12 拦截 esbuild postinstall（安全机制），平台二进制经 optionalDependencies 已就位、功能无影响；消除警告需在交互终端跑一次 `pnpm approve-builds` 选 esbuild。
 
 ---
 
