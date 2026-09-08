@@ -200,9 +200,9 @@ func TestApplySameSecondVersionSuffix(t *testing.T) {
 
 func TestSafeJoin(t *testing.T) {
 	cases := []struct {
-		rel    string
-		ok     bool
-		want   string // 相对 base 的落点（slash 形式），ok=true 时有效
+		rel  string
+		ok   bool
+		want string // 相对 base 的落点（slash 形式），ok=true 时有效
 	}{
 		{"a.txt", true, "a.txt"},
 		{"sub/dir/b.txt", true, "sub/dir/b.txt"},

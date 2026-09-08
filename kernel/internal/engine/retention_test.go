@@ -55,8 +55,8 @@ func TestCleanupKeepDays(t *testing.T) {
 	base := t.TempDir()
 	versions := filepath.Join(base, "versions")
 	now := time.Date(2025, 6, 1, 12, 0, 0, 0, time.UTC)
-	old := fakeVersion(t, versions, now.Add(-5*24*time.Hour), "")  // 超期
-	recent := fakeVersion(t, versions, now.Add(-1*time.Hour), "")  // 未超期
+	old := fakeVersion(t, versions, now.Add(-5*24*time.Hour), "") // 超期
+	recent := fakeVersion(t, versions, now.Add(-1*time.Hour), "") // 未超期
 	current := fakeVersion(t, versions, now.Add(-30*time.Minute), "")
 
 	// keepLast=0：不限数量，仅按 keepDays=3 清理。

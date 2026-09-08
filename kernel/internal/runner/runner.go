@@ -19,8 +19,8 @@ import (
 	"edge-sync/kernel/internal/config"
 	"edge-sync/kernel/internal/engine"
 	"edge-sync/kernel/internal/plugin"
-	"edge-sync/pkg/protocol"
 	"edge-sync/kernel/internal/state"
+	"edge-sync/pkg/protocol"
 )
 
 // MaxBackoff 连续失败后的最大同步间隔。

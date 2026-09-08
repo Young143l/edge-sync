@@ -26,8 +26,8 @@ const (
 
 // ApplyInput Apply 的输入。
 type ApplyInput struct {
-	DataDir        string          // data/<task>/
-	StagingDir     string          // data/<task>/staging/
+	DataDir        string // data/<task>/
+	StagingDir     string // data/<task>/staging/
 	NewManifest    protocol.Manifest
 	Changed        map[string]bool // path -> added/modified（需要从 staging 链接）
 	PrevVersionDir string          // current 指向的上一版本目录；首次同步为空

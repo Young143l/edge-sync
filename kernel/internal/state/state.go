@@ -22,8 +22,8 @@ type Stats struct {
 type TaskState struct {
 	LastManifest        protocol.Manifest `json:"lastManifest"`
 	ManifestFingerprint string            `json:"manifestFingerprint,omitempty"`
-	LastSyncAt          string            `json:"lastSyncAt,omitempty"`     // RFC3339，含失败
-	LastSuccessAt       string            `json:"lastSuccessAt,omitempty"`  // RFC3339
+	LastSyncAt          string            `json:"lastSyncAt,omitempty"`    // RFC3339，含失败
+	LastSuccessAt       string            `json:"lastSuccessAt,omitempty"` // RFC3339
 	ConsecutiveFailures int               `json:"consecutiveFailures"`
 	Stats               Stats             `json:"stats"`
 }
