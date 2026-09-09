@@ -391,7 +391,7 @@ function FilesTab(props: {
         anchor="right"
         open={fileVersionsOpen !== null}
         onClose={() => setFileVersionsOpen(null)}
-        slotProps={{ paper: { sx: { width: { xs: '100vw', sm: 380 }, p: 2 } } }}
+        slotProps={{ paper: { sx: { width: { xs: '100%', sm: 380 }, maxWidth: '100%', p: 2, overflowX: 'hidden' } } }}
       >
         <Box sx={{
           display: 'flex',

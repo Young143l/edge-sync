@@ -1,0 +1,128 @@
+- generic [ref=f11e1]:
+  - generic [ref=f11e3]:
+    - banner [ref=f11e4]:
+      - generic [ref=f11e5]:
+        - button [ref=f11e6] [cursor=pointer]
+        - heading [level=6] [ref=f11e168]: edge-sync
+        - generic [ref=f11e20]: 运行中
+        - button [ref=f11e169] [cursor=pointer]
+        - button [ref=f11e170] [cursor=pointer]
+    - main [ref=f11e16]:
+      - generic [ref=f11e23]:
+        - generic [ref=f11e24]:
+          - link [ref=f11e171] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=f11e28]: demo
+          - generic [ref=f11e29]: 正常
+          - button [ref=f11e172] [cursor=pointer]: 立即同步
+        - paragraph [ref=f11e34]: local · 每 1m0s · 下次运行 07:01:17 · 统计：7 次同步 /14 文件 / 523 B · 保留 keepLast=
+        - tablist [ref=f11e37]:
+          - tab [ref=f11e173] [cursor=pointer]: 概览
+          - tab [selected] [ref=f11e174] [cursor=pointer]: 版本与文件
+        - generic [ref=f11e41]:
+          - generic [ref=f11e42]:
+            - generic [ref=f11e43]:
+              - button [ref=f11e175] [cursor=pointer]:
+                - generic [ref=f11e45]: 20260909-065607 (当前)
+              - button [ref=f11e176] [cursor=pointer]:
+                - generic [ref=f11e47]: 20260909-065606
+              - button [ref=f11e177] [cursor=pointer]:
+                - generic [ref=f11e49]: 20260909-065605
+              - button [ref=f11e178] [cursor=pointer]:
+                - generic [ref=f11e51]: 20260909-065604
+              - button [ref=f11e179] [cursor=pointer]:
+                - generic [ref=f11e53]: 20260909-065602
+            - button [ref=f11e180] [cursor=pointer]: 下载整版本 zip
+          - navigation [ref=f11e58]:
+            - list [ref=f11e59]:
+              - listitem [ref=f11e60]:
+                - button [ref=f11e181] [cursor=pointer]: 全部文件
+          - table [ref=f11e63]:
+            - rowgroup [ref=f11e64]:
+              - row [ref=f11e182]:
+                - columnheader [ref=f11e183]: 名称
+                - columnheader [ref=f11e184]: 大小
+                - columnheader [ref=f11e185]: 修改时间
+                - columnheader [ref=f11e186]: 操作
+            - rowgroup [ref=f11e70]:
+              - row [ref=f11e187]:
+                - cell [ref=f11e188]:
+                  - button [ref=f11e189] [cursor=pointer]: docs
+                - cell [ref=f11e190]: —
+                - cell [ref=f11e191]: 2026-09-09 06:56:07
+                - cell [ref=f11e79]
+              - row [ref=f11e192]:
+                - cell [ref=f11e193]:
+                  - button [ref=f11e194] [cursor=pointer]: notes
+                - cell [ref=f11e195]: —
+                - cell [ref=f11e196]: 2026-09-09 06:56:07
+                - cell [ref=f11e88]
+              - row [ref=f11e197]:
+                - cell [ref=f11e198]:
+                  - button [ref=f11e199] [cursor=pointer]: sub
+                - cell [ref=f11e200]: —
+                - cell [ref=f11e201]: 2026-09-09 06:56:07
+                - cell [ref=f11e97]
+              - row [ref=f11e202]:
+                - cell [ref=f11e203]:
+                  - generic [ref=f11e100]: CHANGELOG.md
+                - cell [ref=f11e204]: 51.0 B
+                - cell [ref=f11e205]: 2026-09-09 06:56:06
+                - cell [ref=f11e105]:
+                  - link [ref=f11e206] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=CHANGELOG.md
+                  - button [ref=f11e207] [cursor=pointer]
+              - row [ref=f11e208]:
+                - cell [ref=f11e209]:
+                  - generic [ref=f11e114]: a.txt
+                - cell [ref=f11e210]: 12.0 B
+                - cell [ref=f11e211]: 2026-09-09 05:32:16
+                - cell [ref=f11e119]:
+                  - link [ref=f11e212] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=a.txt
+                  - button [ref=f11e213] [cursor=pointer]
+              - row [ref=f11e214]:
+                - cell [ref=f11e215]:
+                  - generic [ref=f11e128]: b.md
+                - cell [ref=f11e216]: 12.0 B
+                - cell [ref=f11e217]: 2026-09-09 05:32:16
+                - cell [ref=f11e133]:
+                  - link [ref=f11e218] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=b.md
+                  - button [ref=f11e219] [cursor=pointer]
+              - row [ref=f11e220]:
+                - cell [ref=f11e221]:
+                  - generic [ref=f11e142]: g.txt
+                - cell [ref=f11e222]: 5.0 B
+                - cell [ref=f11e223]: 2026-09-09 06:56:07
+                - cell [ref=f11e147]:
+                  - link [ref=f11e224] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=g.txt
+                  - button [ref=f11e225] [cursor=pointer]
+              - row [ref=f11e226]:
+                - cell [ref=f11e227]:
+                  - generic [ref=f11e156]: scripts.sh
+                - cell [ref=f11e228]: 36.0 B
+                - cell [ref=f11e229]: 2026-09-09 06:56:05
+                - cell [ref=f11e161]:
+                  - link [ref=f11e230] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=scripts.sh
+                  - button [ref=f11e231] [cursor=pointer]
+  - generic [active] [ref=f11e233]:
+    - generic [ref=f11e234]:
+      - heading "文件历史：CHANGELOG.md" [level=6] [ref=f11e235]
+      - button "关闭文件历史" [ref=f11e236] [cursor=pointer]
+    - separator [ref=f11e239]
+    - generic [ref=f11e240]:
+      - paragraph [ref=f11e241]: 20260909-065605
+      - generic [ref=f11e242]: 29.0 B · 379df560b46d
+      - link [ref=f11e243] [cursor=pointer]:
+        - /url: /api/tasks/demo/download?version=20260909-065605&path=CHANGELOG.md
+      - separator [ref=f11e247]
+    - generic [ref=f11e248]:
+      - paragraph [ref=f11e249]: 20260909-065606
+      - generic [ref=f11e250]: 51.0 B · 989864701075
+      - link [ref=f11e251] [cursor=pointer]:
+        - /url: /api/tasks/demo/download?version=20260909-065606&path=CHANGELOG.md
+      - separator [ref=f11e255]
+    - button "关闭" [ref=f11e256] [cursor=pointer]
