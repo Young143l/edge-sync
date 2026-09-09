@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"edge-sync/pkg/protocol"
@@ -216,8 +217,13 @@ func cmdAdd(ctx ctx) error {
 		return fmt.Errorf("invalid task name")
 	}
 	intervalSec := askDefault("poll interval (seconds): ", "600")
-	keepLast := askDefault("retention keepLast (versions to keep): ", "10")
-	keepDays := askDefault("retention keepDays (0 = unlimited): ", "0")
+	keepLastStr := askDefault("retention keepLast (versions to keep): ", "10")
+	keepDaysStr := askDefault("retention keepDays (0 = unlimited): ", "0")
+	keepLast, keepErr := strconv.Atoi(keepLastStr)
+	keepDays, daysErr := strconv.Atoi(keepDaysStr)
+	if keepErr != nil || daysErr != nil || keepLast < 0 || keepDays < 0 {
+		return fmt.Errorf("retention 值必须是非负整数（got keepLast=%q keepDays=%q）", keepLastStr, keepDaysStr)
+	}
 
 	options := map[string]any{}
 	props := schemaProps(chosen.ConfigSchema)
