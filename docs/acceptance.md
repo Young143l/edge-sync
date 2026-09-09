@@ -117,3 +117,14 @@
 
 阶段 5 主体完成：双服务实机运行、GitHub 私有仓库真实链路全通。
 剩余：24h 稳定观察（重启自启已 enable；网络窗口由退避机制消化）。
+
+## 阶段 5 系统优化记录（2026-09-09）
+
+| 项 | 操作 | 结果 |
+|---|---|---|
+| 无用服务 | disable --now ModemManager / triggerhappy（调制解调器管理与热键守护，2B 无用） | ✅ 停止；serial-getty 与 avahi 按需保留（风扇串口 / .local 发现） |
+| 日志上限 | journald SystemMaxUse=50M（持久化已开，防 SD 撑爆） | ✅ 当前 2.3M |
+| 自动安全更新 | unattended-upgrades 安装启用（每日检查 security 源，不自动重启） | ✅ apt-daily-upgrade.timer enabled |
+| 硬件看门狗 | bcm2835_wdt 模块 + systemd RuntimeWatchdogSec=10（系统 hang 自动重启） | ✅ /dev/watchdog 就绪，重启后生效 |
+| SSH 密钥免密 | ed25519→id_rsa 公钥已装（pexpect 一次性） | ✅ BatchMode 登录 |
+| 勘察基线 | Raspbian 12 bookworm / 内核 6.12.34+rpt-rpi-v7 / NTP 同步 / noatime 已挂 / swap 512M / 温度 33.6°C / 磁盘余 4.0G | 全部健康 |
