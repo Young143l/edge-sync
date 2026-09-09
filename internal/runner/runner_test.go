@@ -10,11 +10,11 @@ import (
 	"testing"
 	"time"
 
-	"edge-sync/kernel/internal/config"
-	"edge-sync/kernel/internal/state"
+	"edge-sync/internal/config"
+	"edge-sync/internal/state"
 )
 
-// buildPluginLocal 编译 plugins/plugin-local 到临时目录（module 根在 ../../..）。
+// buildPluginLocal 编译 plugins/plugin-local 到临时目录（module 根在 ../..）。
 func buildPluginLocal(t *testing.T) string {
 	t.Helper()
 	bin := filepath.Join(t.TempDir(), "plugin-local")
@@ -29,7 +29,7 @@ func buildPluginLocal(t *testing.T) string {
 
 func moduleRoot(t *testing.T) string {
 	t.Helper()
-	dir, err := filepath.Abs("../../..")
+	dir, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
 	}

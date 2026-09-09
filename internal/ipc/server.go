@@ -16,12 +16,12 @@ import (
 	"sync"
 	"time"
 
-	"edge-sync/kernel/internal/config"
-	"edge-sync/kernel/internal/engine"
-	"edge-sync/kernel/internal/logring"
-	"edge-sync/kernel/internal/plugin"
-	"edge-sync/kernel/internal/runner"
-	"edge-sync/kernel/internal/state"
+	"edge-sync/internal/config"
+	"edge-sync/internal/engine"
+	"edge-sync/internal/logring"
+	"edge-sync/internal/plugin"
+	"edge-sync/internal/runner"
+	"edge-sync/internal/state"
 	"edge-sync/pkg/protocol"
 )
 

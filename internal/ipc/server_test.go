@@ -5,18 +5,18 @@ import (
 	"context"
 	"encoding/json"
 	"log/slog"
-	"os/exec"
 	"net"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"sync"
 	"testing"
 	"time"
 
-	"edge-sync/kernel/internal/config"
-	"edge-sync/kernel/internal/logring"
-	"edge-sync/kernel/internal/runner"
-	"edge-sync/kernel/internal/state"
+	"edge-sync/internal/config"
+	"edge-sync/internal/logring"
+	"edge-sync/internal/runner"
+	"edge-sync/internal/state"
 	"edge-sync/pkg/protocol"
 )
 
@@ -31,8 +31,6 @@ type testStack struct {
 	dataDir  string
 	stateDir string
 }
-
-
 
 func (ts *testStack) setCfg(c *config.Config) error {
 	ts.cfgMu.Lock()
@@ -96,7 +94,7 @@ func buildPluginLocal(t *testing.T) string {
 	t.Helper()
 	bin := filepath.Join(t.TempDir(), "plugin-local")
 	cmd := exec.Command("go", "build", "-o", bin, "edge-sync/plugins/plugin-local")
-	cmd.Dir = "../../../"
+	cmd.Dir = "../.."
 	if out, err := cmd.CombinedOutput(); err != nil {
 		t.Fatalf("build plugin-local: %v\n%s", err, out)
 	}

@@ -14,11 +14,11 @@ import (
 	"sync"
 	"syscall"
 
-	"edge-sync/kernel/internal/config"
-	"edge-sync/kernel/internal/ipc"
-	"edge-sync/kernel/internal/logring"
-	"edge-sync/kernel/internal/runner"
-	"edge-sync/kernel/internal/state"
+	"edge-sync/internal/config"
+	"edge-sync/internal/ipc"
+	"edge-sync/internal/logring"
+	"edge-sync/internal/runner"
+	"edge-sync/internal/state"
 )
 
 const version = "0.1.0"

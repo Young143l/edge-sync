@@ -16,10 +16,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"edge-sync/kernel/internal/config"
-	"edge-sync/kernel/internal/engine"
-	"edge-sync/kernel/internal/plugin"
-	"edge-sync/kernel/internal/state"
+	"edge-sync/internal/config"
+	"edge-sync/internal/engine"
+	"edge-sync/internal/plugin"
+	"edge-sync/internal/state"
 	"edge-sync/pkg/protocol"
 )
 

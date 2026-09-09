@@ -107,7 +107,7 @@ func Apply(in ApplyInput) (string, error) {
 
 func writeManifestFile(versionDir string, m protocol.Manifest) error {
 	type manifestFile struct {
-		ManifestFingerprint string              `json:"manifestFingerprint,omitempty"`
+		ManifestFingerprint string               `json:"manifestFingerprint,omitempty"`
 		Entries             []protocol.FileEntry `json:"entries"`
 	}
 	mf := manifestFile{ManifestFingerprint: m.ManifestFingerprint, Entries: m.Entries}
