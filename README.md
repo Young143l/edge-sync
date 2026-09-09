@@ -23,3 +23,39 @@
 
 - 设计方案：`docs/DESIGN.md`
 - 分阶段执行清单：`docs/TODO.md`
+
+## Git 私有仓库（SSH deploy key）
+
+拉取 GitHub 私有仓库（私有镜像）推荐 SSH + deploy key：
+
+```bash
+# 1. 生成无口令密钥（BatchMode 下无法交互输入 passphrase）
+ssh-keygen -t ed25519 -f /opt/edge-sync/etc/keys/github_myrepo -N ""
+
+# 2. 公钥（.pub）添加到 GitHub 仓库：Settings → Deploy keys → Add（只读勾选）
+
+# 3. known_hosts 首连自动接受（StrictHostKeyChecking=accept-new）
+```
+
+任务配置示例（多仓库多密钥：每个任务独立 `keyFile`，进程天然隔离）：
+
+```yaml
+tasks:
+  - name: private-mirror
+    plugin: git
+    interval: 5m
+    options:
+      url: git@github.com:me/private-repo.git   # SSH 形式
+      branch: main
+      cacheDir: /opt/edge-sync/var/cache/private-mirror
+      keyFile: /opt/edge-sync/etc/keys/github_myrepo
+    retention:
+      keepLast: 10
+```
+
+注意事项：
+
+- 密钥必须**无口令**（同步为无人值守流程，无法交互输入 passphrase）；有口令密钥可用 `ssh-agent`
+- 自定义 SSH 端口使用 `ssh://git@host:<port>/<user>/<repo>.git` 形式
+- HTTPS + token 路径：`token` 配置项（建议 `${ENV}` 展开注入），`username` 默认 `x-access-token`
+- 密钥文件不存在时同步立即失败并给出明确报错

@@ -8,6 +8,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -26,7 +27,20 @@ const (
 
 type localPlugin struct{}
 
-func (localPlugin) Initialize() (string, string) { return pluginName, pluginVersion }
+var localConfigSchema = json.RawMessage(`{
+  "type": "object",
+  "required": ["root"],
+  "properties": {
+    "root": {
+      "type": "string",
+      "description": "本地源目录绝对路径"
+    }
+  }
+}`)
+
+func (localPlugin) Initialize() (string, string, json.RawMessage) {
+	return pluginName, pluginVersion, localConfigSchema
+}
 
 func (localPlugin) Snapshot(cfg map[string]any) (*protocol.Manifest, error) {
 	root, err := rootOf(cfg)

@@ -22,8 +22,9 @@ import (
 
 // Handler 插件业务接口（协议方法到业务的一对一映射）。
 type Handler interface {
-	// Initialize 返回插件名与版本（协议握手用）。
-	Initialize() (name, version string)
+	// Initialize 返回插件名、版本与任务 options 的 JSON Schema 片段
+	// （协议握手用；schema 供 CLI 向导与面板设置页展示/校验，可为 nil）。
+	Initialize() (name, version string, configSchema json.RawMessage)
 	// Snapshot 返回远端文件清单。cfg 为任务 options（已展开的 map）。
 	Snapshot(cfg map[string]any) (*protocol.Manifest, error)
 	// FetchFile 把远端单个文件写到 destPath（先写临时文件再 rename）。
@@ -67,7 +68,7 @@ func Logf(format string, args ...any) {
 
 // Run 启动行协议主循环；stdin 关闭（内核结束会话）时返回。
 func Run(h Handler) {
-	name, version := h.Initialize()
+	name, version, _ := h.Initialize()
 	logPrefix = "[" + name + "]"
 	Logf("starting, version %s, protocol v%d", version, protocol.ProtocolVersion)
 
@@ -92,8 +93,10 @@ func Run(h Handler) {
 func dispatch(h Handler, req *protocol.Request) *protocol.Response {
 	switch req.Method {
 	case protocol.MethodInitialize:
-		name, version := h.Initialize()
-		return ok(req.ID, protocol.InitializeResult{Name: name, Version: version})
+		name, version, schema := h.Initialize()
+		return ok(req.ID, protocol.InitializeResult{
+			Name: name, Version: version, ConfigSchema: schema,
+		})
 
 	case protocol.MethodSnapshot:
 		var p protocol.SnapshotParams
