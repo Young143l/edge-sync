@@ -1,0 +1,101 @@
+- generic [ref=f15e1]:
+  - generic [ref=f15e3]:
+    - banner [ref=f15e4]:
+      - generic [ref=f15e5]:
+        - heading [level=6] [ref=f15e127]: edge-sync
+        - generic [ref=f15e40]: 运行中
+        - button [ref=f15e128] [cursor=pointer]
+        - button [ref=f15e129] [cursor=pointer]
+    - generic [ref=f15e14]:
+      - list [ref=f15e16]:
+        - link [ref=f15e130] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f15e21]: 仪表盘
+        - link [ref=f15e131] [cursor=pointer]:
+          - /url: /logs
+          - generic [ref=f15e27]: 日志
+        - link [ref=f15e132] [cursor=pointer]:
+          - /url: /settings
+          - generic [ref=f15e33]: 设置
+      - generic [ref=f15e35]: edge-sync v0.1.0
+    - main [ref=f15e36]:
+      - generic [ref=f15e43]:
+        - generic [ref=f15e44]:
+          - link [ref=f15e133] [cursor=pointer]:
+            - /url: /
+          - heading [level=5] [ref=f15e134]: demo
+          - generic [ref=f15e49]: 正常
+          - button [ref=f15e135] [cursor=pointer]: 立即同步
+        - paragraph [ref=f15e54]: local · 每 1m0s · 下次运行 06:11:17 · 统计：1 次同步 /3 文件 / 31.0 B · 保留 keepLast=
+        - tablist [ref=f15e57]:
+          - tab [selected] [ref=f15e136] [cursor=pointer]: 概览
+          - tab [ref=f15e137] [cursor=pointer]: 版本与文件
+        - generic [ref=f15e61]:
+          - generic [ref=f15e62]:
+            - heading [level=6] [ref=f15e138]: 版本时间线
+            - generic [ref=f15e66]:
+              - button [ref=f15e139] [cursor=pointer]: 20260909-053216
+              - generic [ref=f15e68]: 当前
+              - generic [ref=f15e70]: 3 文件 · 31.0 B
+          - generic [ref=f15e71]:
+            - heading [level=6] [ref=f15e140]: 最近同步记录
+            - paragraph [ref=f15e73]: 13:32:16 synced task=demo added=3 modified=0 removed=0 version=20260909-053216 bytes=31 pruned=0 duration=640ms
+            - paragraph [ref=f15e74]: 13:33:16 no change task=demo
+            - paragraph [ref=f15e75]: 13:34:16 no change task=demo
+            - paragraph [ref=f15e76]: 13:35:16 no change task=demo
+            - paragraph [ref=f15e77]: 13:36:16 no change task=demo
+            - paragraph [ref=f15e78]: 13:37:16 no change task=demo
+            - paragraph [ref=f15e79]: 13:37:26 no change task=demo
+            - paragraph [ref=f15e80]: 13:38:16 no change task=demo
+            - paragraph [ref=f15e81]: 13:39:16 no change task=demo
+            - paragraph [ref=f15e82]: 13:39:37 no change task=demo
+            - paragraph [ref=f15e83]: 13:40:16 no change task=demo
+            - paragraph [ref=f15e84]: 13:41:16 no change task=demo
+            - paragraph [ref=f15e85]: 13:42:16 no change task=demo
+            - paragraph [ref=f15e86]: 13:42:49 no change task=demo
+            - paragraph [ref=f15e87]: 13:43:16 no change task=demo
+            - paragraph [ref=f15e88]: 13:44:16 no change task=demo
+            - paragraph [ref=f15e89]: 13:44:36 no change task=demo
+            - paragraph [ref=f15e90]: 13:45:16 no change task=demo
+            - paragraph [ref=f15e91]: 13:46:16 no change task=demo
+            - paragraph [ref=f15e92]: 13:47:16 no change task=demo
+            - paragraph [ref=f15e93]: 13:48:16 no change task=demo
+            - paragraph [ref=f15e94]: 13:49:16 no change task=demo
+            - paragraph [ref=f15e95]: 13:50:16 no change task=demo
+            - paragraph [ref=f15e96]: 13:51:16 no change task=demo
+            - paragraph [ref=f15e97]: 13:52:16 no change task=demo
+            - paragraph [ref=f15e98]: 13:53:16 no change task=demo
+            - paragraph [ref=f15e99]: 13:54:02 no change task=demo
+            - paragraph [ref=f15e100]: 13:54:16 no change task=demo
+            - paragraph [ref=f15e101]: 13:55:16 no change task=demo
+            - paragraph [ref=f15e102]: 13:56:11 no change task=demo
+            - paragraph [ref=f15e103]: 13:56:16 no change task=demo
+            - paragraph [ref=f15e104]: 13:56:36 no change task=demo
+            - paragraph [ref=f15e105]: 13:57:03 no change task=demo
+            - paragraph [ref=f15e106]: 13:57:16 no change task=demo
+            - paragraph [ref=f15e107]: 13:58:16 no change task=demo
+            - paragraph [ref=f15e108]: 13:59:16 no change task=demo
+            - paragraph [ref=f15e109]: 14:00:16 no change task=demo
+            - paragraph [ref=f15e110]: 14:00:16 no change task=demo
+            - paragraph [ref=f15e111]: 14:01:16 no change task=demo
+            - paragraph [ref=f15e112]: 14:02:16 no change task=demo
+            - paragraph [ref=f15e113]: 14:02:17 no change task=demo
+            - paragraph [ref=f15e114]: 14:03:17 no change task=demo
+            - paragraph [ref=f15e115]: 14:03:24 no change task=demo
+            - paragraph [ref=f15e116]: 14:04:17 no change task=demo
+            - paragraph [ref=f15e117]: 14:04:26 no change task=demo
+            - paragraph [ref=f15e118]: 14:05:17 no change task=demo
+            - paragraph [ref=f15e119]: 14:06:17 no change task=demo
+            - paragraph [ref=f15e120]: 14:06:23 no change task=demo
+            - paragraph [ref=f15e121]: 14:07:17 no change task=demo
+            - paragraph [ref=f15e122]: 14:08:17 no change task=demo
+            - paragraph [ref=f15e123]: 14:08:40 no change task=demo
+            - paragraph [ref=f15e124]: 14:09:17 no change task=demo
+            - paragraph [ref=f15e125]: 14:09:21 no change task=demo
+            - paragraph [ref=f15e126]: 14:10:17 no change task=demo
+  - dialog [ref=f15e143]:
+    - heading "立即同步" [level=2] [ref=f15e144]
+    - paragraph [ref=f15e146]: 将立即对任务「demo」执行一次同步（等待完成）。
+    - generic [ref=f15e147]:
+      - button "取消" [ref=f15e148] [cursor=pointer]
+      - button "确认同步" [ref=f15e149] [cursor=pointer]

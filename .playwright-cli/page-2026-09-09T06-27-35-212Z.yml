@@ -1,0 +1,32 @@
+- generic [ref=f20e1]:
+  - generic [ref=f20e3]:
+    - banner [ref=f20e4]:
+      - generic [ref=f20e5]:
+        - button [ref=f20e6] [cursor=pointer]
+        - heading [level=6] [ref=f20e45]: edge-sync
+        - generic [ref=f20e23]: 运行中
+        - button [ref=f20e46] [cursor=pointer]
+        - button [ref=f20e47] [cursor=pointer]
+    - main [ref=f20e16]:
+      - generic [ref=f20e18]:
+        - alert [ref=f20e26]:
+          - generic [ref=f20e30]: 1 个任务 · 0 同步中 · 服务正常轮询中
+        - generic [ref=f20e32]:
+          - generic [ref=f20e33]:
+            - generic [ref=f20e34]: demo
+            - generic [ref=f20e35]: 正常
+            - paragraph [ref=f20e39]: local · 每 1m0s
+            - paragraph [ref=f20e40]: 上次成功：55 分钟前
+            - generic [ref=f20e41]: 下次运行：06:28:17
+          - generic [ref=f20e42]:
+            - button [ref=f20e48] [cursor=pointer]: 立即同步
+            - button [ref=f20e49] [cursor=pointer]: 详情
+  - generic [active] [ref=f20e51]:
+    - list [ref=f20e53]:
+      - link "仪表盘" [ref=f20e54] [cursor=pointer]:
+        - /url: /
+      - link "日志" [ref=f20e60] [cursor=pointer]:
+        - /url: /logs
+      - link "设置" [ref=f20e66] [cursor=pointer]:
+        - /url: /settings
+    - generic [ref=f20e72]: edge-sync v0.1.0

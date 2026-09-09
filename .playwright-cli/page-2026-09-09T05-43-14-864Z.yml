@@ -1,0 +1,16 @@
+- generic [ref=f7e3]:
+  - banner [ref=f7e4]:
+    - generic [ref=f7e5]:
+      - heading "edge-sync" [level=6] [ref=f7e6]
+      - button "刷新全部" [ref=f7e7] [cursor=pointer]
+      - button "切换明暗" [ref=f7e10] [cursor=pointer]
+  - generic [ref=f7e14]:
+    - list [ref=f7e16]:
+      - link "仪表盘" [ref=f7e17] [cursor=pointer]:
+        - /url: /
+      - link "日志" [ref=f7e23] [cursor=pointer]:
+        - /url: /logs
+      - link "设置" [ref=f7e29] [cursor=pointer]:
+        - /url: /settings
+    - generic [ref=f7e35]: edge-sync v0.1.0
+  - main [ref=f7e36]

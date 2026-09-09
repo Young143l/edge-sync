@@ -1,0 +1,73 @@
+- generic [ref=f9e1]:
+  - generic [ref=f9e3]:
+    - banner [ref=f9e4]:
+      - generic [ref=f9e5]:
+        - heading [level=6] [ref=f9e99]: edge-sync
+        - generic [ref=f9e40]: 运行中
+        - button [ref=f9e100] [cursor=pointer]
+        - button [ref=f9e101] [cursor=pointer]
+    - generic [ref=f9e14]:
+      - list [ref=f9e16]:
+        - link [ref=f9e102] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f9e21]: 仪表盘
+        - link [ref=f9e103] [cursor=pointer]:
+          - /url: /logs
+          - generic [ref=f9e27]: 日志
+        - link [ref=f9e104] [cursor=pointer]:
+          - /url: /settings
+          - generic [ref=f9e33]: 设置
+      - generic [ref=f9e35]: edge-sync v0.1.0
+    - main [ref=f9e36]:
+      - generic [ref=f9e43]:
+        - generic [ref=f9e44]:
+          - link [ref=f9e105] [cursor=pointer]:
+            - /url: /
+          - heading [level=5] [ref=f9e106]: demo
+          - generic [ref=f9e49]: 正常
+          - button [ref=f9e107] [cursor=pointer]: 立即同步
+        - paragraph [ref=f9e54]: local · 每 1m0s · 下次运行 05:54:16 · 统计：1 次同步 /3 文件 / 31.0 B · 保留 keepLast=
+        - tablist [ref=f9e57]:
+          - tab [selected] [ref=f9e108] [cursor=pointer]: 概览
+          - tab [ref=f9e109] [cursor=pointer]: 版本与文件
+        - generic [ref=f9e61]:
+          - generic [ref=f9e62]:
+            - heading [level=6] [ref=f9e110]: 版本时间线
+            - generic [ref=f9e66]:
+              - button [ref=f9e111] [cursor=pointer]: 20260909-053216
+              - generic [ref=f9e68]: 当前
+              - generic [ref=f9e70]: 3 文件 · 31.0 B
+          - generic [ref=f9e71]:
+            - heading [level=6] [ref=f9e112]: 最近同步记录
+            - paragraph [ref=f9e73]: 13:32:16 synced task=demo added=3 modified=0 removed=0 version=20260909-053216 bytes=31 pruned=0 duration=640ms
+            - paragraph [ref=f9e74]: 13:33:16 no change task=demo
+            - paragraph [ref=f9e75]: 13:34:16 no change task=demo
+            - paragraph [ref=f9e76]: 13:35:16 no change task=demo
+            - paragraph [ref=f9e77]: 13:36:16 no change task=demo
+            - paragraph [ref=f9e78]: 13:37:16 no change task=demo
+            - paragraph [ref=f9e79]: 13:37:26 no change task=demo
+            - paragraph [ref=f9e80]: 13:38:16 no change task=demo
+            - paragraph [ref=f9e81]: 13:39:16 no change task=demo
+            - paragraph [ref=f9e82]: 13:39:37 no change task=demo
+            - paragraph [ref=f9e83]: 13:40:16 no change task=demo
+            - paragraph [ref=f9e84]: 13:41:16 no change task=demo
+            - paragraph [ref=f9e85]: 13:42:16 no change task=demo
+            - paragraph [ref=f9e86]: 13:42:49 no change task=demo
+            - paragraph [ref=f9e87]: 13:43:16 no change task=demo
+            - paragraph [ref=f9e88]: 13:44:16 no change task=demo
+            - paragraph [ref=f9e89]: 13:44:36 no change task=demo
+            - paragraph [ref=f9e90]: 13:45:16 no change task=demo
+            - paragraph [ref=f9e91]: 13:46:16 no change task=demo
+            - paragraph [ref=f9e92]: 13:47:16 no change task=demo
+            - paragraph [ref=f9e93]: 13:48:16 no change task=demo
+            - paragraph [ref=f9e94]: 13:49:16 no change task=demo
+            - paragraph [ref=f9e95]: 13:50:16 no change task=demo
+            - paragraph [ref=f9e96]: 13:51:16 no change task=demo
+            - paragraph [ref=f9e97]: 13:52:16 no change task=demo
+            - paragraph [ref=f9e98]: 13:53:16 no change task=demo
+  - dialog [ref=f9e115]:
+    - heading "立即同步" [level=2] [ref=f9e116]
+    - paragraph [ref=f9e118]: 将立即对任务「demo」执行一次同步（等待完成）。
+    - generic [ref=f9e119]:
+      - button "取消" [ref=f9e120] [cursor=pointer]
+      - button "确认同步" [ref=f9e121] [cursor=pointer]

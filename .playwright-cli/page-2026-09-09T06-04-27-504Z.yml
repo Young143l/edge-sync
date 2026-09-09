@@ -1,0 +1,81 @@
+- generic [ref=f13e1]:
+  - generic [ref=f13e3]:
+    - banner [ref=f13e4]:
+      - generic [ref=f13e5]:
+        - heading [level=6] [ref=f13e115]: edge-sync
+        - generic [ref=f13e7]: 运行中
+        - button [ref=f13e116] [cursor=pointer]
+        - button [ref=f13e117] [cursor=pointer]
+    - generic [ref=f13e17]:
+      - list [ref=f13e19]:
+        - link [ref=f13e118] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f13e24]: 仪表盘
+        - link [ref=f13e119] [cursor=pointer]:
+          - /url: /logs
+          - generic [ref=f13e30]: 日志
+        - link [ref=f13e120] [cursor=pointer]:
+          - /url: /settings
+          - generic [ref=f13e36]: 设置
+      - generic [ref=f13e38]: edge-sync v0.1.0
+    - main [ref=f13e39]:
+      - generic [ref=f13e41]:
+        - generic [ref=f13e42]:
+          - link [ref=f13e121] [cursor=pointer]:
+            - /url: /
+          - heading [level=5] [ref=f13e122]: demo
+          - generic [ref=f13e47]: 正常
+          - button [ref=f13e123] [cursor=pointer]: 立即同步
+        - paragraph [ref=f13e52]: local · 每 1m0s · 下次运行 06:05:17 · 统计：1 次同步 /3 文件 / 31.0 B · 保留 keepLast=
+        - tablist [ref=f13e55]:
+          - tab [ref=f13e124] [cursor=pointer]: 概览
+          - tab [selected] [ref=f13e125] [cursor=pointer]: 版本与文件
+        - generic [ref=f13e138]:
+          - generic [ref=f13e139]:
+            - button [ref=f13e141] [cursor=pointer]:
+              - generic [ref=f13e142]: 20260909-053216 (当前)
+            - button [ref=f13e143] [cursor=pointer]: 下载整版本 zip
+          - navigation [ref=f13e147]:
+            - list [ref=f13e148]:
+              - listitem [ref=f13e149]:
+                - button [ref=f13e150] [cursor=pointer]: 根
+          - table [ref=f13e152]:
+            - rowgroup [ref=f13e153]:
+              - row [ref=f13e154]:
+                - columnheader [ref=f13e155]: 名称
+                - columnheader [ref=f13e156]: 大小
+                - columnheader [ref=f13e157]: 修改时间
+                - columnheader [ref=f13e158]: 操作
+            - rowgroup [ref=f13e159]:
+              - row [ref=f13e160]:
+                - cell [ref=f13e161]:
+                  - button [ref=f13e165] [cursor=pointer]: sub
+                - cell [ref=f13e166]: —
+                - cell [ref=f13e167]: 2026-09-09 05:32:16
+                - cell [ref=f13e168]
+              - row [ref=f13e169]:
+                - cell [ref=f13e170]:
+                  - generic [ref=f13e171]: a.txt
+                - cell [ref=f13e174]: 12.0 B
+                - cell [ref=f13e175]: 2026-09-09 05:32:16
+                - cell [ref=f13e176]:
+                  - link [ref=f13e177] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=a.txt
+                  - button [ref=f13e180] [cursor=pointer]
+              - row [ref=f13e183]:
+                - cell [ref=f13e184]:
+                  - generic [ref=f13e185]: b.md
+                - cell [ref=f13e188]: 12.0 B
+                - cell [ref=f13e189]: 2026-09-09 05:32:16
+                - cell [ref=f13e190]:
+                  - link [ref=f13e191] [cursor=pointer]:
+                    - /url: /api/tasks/demo/download?version=current&path=b.md
+                  - button [ref=f13e194] [cursor=pointer]
+        - alert [ref=f13e197]:
+          - generic [ref=f13e201]: 同步完成
+  - dialog [ref=f13e131]:
+    - heading "立即同步" [level=2] [ref=f13e132]
+    - paragraph [ref=f13e134]: 将立即对任务「demo」执行一次同步（等待完成）。
+    - generic [ref=f13e135]:
+      - button "取消" [ref=f13e136] [cursor=pointer]
+      - button "确认同步" [ref=f13e137] [cursor=pointer]

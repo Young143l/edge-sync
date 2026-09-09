@@ -1,0 +1,68 @@
+- generic [ref=f5e3]:
+  - banner [ref=f5e4]:
+    - generic [ref=f5e5]:
+      - heading "edge-sync" [level=6] [ref=f5e6]
+      - generic [ref=f5e40]: 运行中
+      - button "刷新全部" [ref=f5e7] [cursor=pointer]
+      - button "切换明暗" [ref=f5e10] [cursor=pointer]
+  - generic [ref=f5e14]:
+    - list [ref=f5e16]:
+      - link "仪表盘" [ref=f5e17] [cursor=pointer]:
+        - /url: /
+      - link "日志" [ref=f5e23] [cursor=pointer]:
+        - /url: /logs
+      - link "设置" [ref=f5e29] [cursor=pointer]:
+        - /url: /settings
+    - generic [ref=f5e35]: edge-sync v0.1.0
+  - main [ref=f5e36]:
+    - generic [ref=f5e43]:
+      - generic [ref=f5e44]:
+        - link "返回" [ref=f5e45] [cursor=pointer]:
+          - /url: /
+        - heading "demo" [level=5] [ref=f5e48]
+        - generic [ref=f5e49]: 正常
+        - button "立即同步" [active] [ref=f5e53] [cursor=pointer]
+      - paragraph [ref=f5e54]: local · 每 1m0s · 下次运行 05:38:16 · 统计：1 次同步 /3 文件 / 31.0 B · 保留 keepLast=
+      - tablist [ref=f5e57]:
+        - tab "概览" [ref=f5e58] [cursor=pointer]
+        - tab "版本与文件" [selected] [ref=f5e59] [cursor=pointer]
+      - generic [ref=f5e79]:
+        - generic [ref=f5e80]:
+          - button "20260909-053216 (当前)" [ref=f5e82] [cursor=pointer]
+          - button [ref=f5e84] [cursor=pointer]
+        - navigation [ref=f5e88]:
+          - list [ref=f5e89]:
+            - listitem [ref=f5e90]:
+              - button "根" [ref=f5e91] [cursor=pointer]
+        - table [ref=f5e93]:
+          - rowgroup [ref=f5e94]:
+            - row [ref=f5e95]:
+              - columnheader "名称" [ref=f5e96]
+              - columnheader "大小" [ref=f5e97]
+              - columnheader "修改时间" [ref=f5e98]
+              - columnheader "操作" [ref=f5e99]
+          - rowgroup [ref=f5e100]:
+            - row [ref=f5e101]:
+              - cell [ref=f5e102]:
+                - button "sub" [ref=f5e106] [cursor=pointer]
+              - cell "—" [ref=f5e107]
+              - cell "2026-09-09 05:32:16" [ref=f5e108]
+              - cell [ref=f5e109]
+            - row [ref=f5e110]:
+              - cell "a.txt" [ref=f5e111]
+              - cell "12.0 B" [ref=f5e115]
+              - cell "2026-09-09 05:32:16" [ref=f5e116]
+              - cell [ref=f5e117]:
+                - link "下载" [ref=f5e118] [cursor=pointer]:
+                  - /url: /api/tasks/demo/download?version=current&path=a.txt
+                - button "历史" [ref=f5e121] [cursor=pointer]
+            - row [ref=f5e124]:
+              - cell "b.md" [ref=f5e125]
+              - cell "12.0 B" [ref=f5e129]
+              - cell "2026-09-09 05:32:16" [ref=f5e130]
+              - cell [ref=f5e131]:
+                - link "下载" [ref=f5e132] [cursor=pointer]:
+                  - /url: /api/tasks/demo/download?version=current&path=b.md
+                - button "历史" [ref=f5e135] [cursor=pointer]
+      - alert [ref=f5e138]:
+        - generic [ref=f5e142]: 同步完成

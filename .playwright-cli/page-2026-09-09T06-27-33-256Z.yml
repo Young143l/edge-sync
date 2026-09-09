@@ -1,0 +1,8 @@
+- generic [ref=f20e3]:
+  - banner [ref=f20e4]:
+    - generic [ref=f20e5]:
+      - button [ref=f20e6] [cursor=pointer]
+      - heading "edge-sync" [level=6] [ref=f20e9]
+      - button "刷新全部" [ref=f20e10] [cursor=pointer]
+      - button "切换明暗" [ref=f20e13] [cursor=pointer]
+  - main [ref=f20e16]
