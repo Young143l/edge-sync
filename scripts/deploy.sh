@@ -111,6 +111,8 @@ UNIT
 
 # 示例配置（远端已有则 rsync --ignore-existing 不会覆盖）
 cat > "$STAGE/etc/config.yaml.example" <<EOF
+server:
+  socket: $REMOTE/var/edge-syncd.sock
 storage:
   dataDir: $REMOTE/data
   stateDir: $REMOTE/var/state
@@ -138,13 +140,16 @@ if [[ $DRY_RUN -eq 1 ]]; then
 fi
 [[ -n "$HOST" ]] || { echo "[deploy] 需要 --host user@host"; exit 1; }
 
-# 4) rsync（etc/data/var 远端已有则不覆盖）
+# 4) 远端目录预备（/opt 需 sudo；建好后交目标用户）
+ssh "$HOST" "sudo mkdir -p $REMOTE && sudo chown \$(whoami):\$(id -gn) $REMOTE"
+
+# 5) rsync（etc/data/var 远端已有则不覆盖）
 rsync -avz --delete "$STAGE/" \
   --exclude 'etc/config.yaml' --exclude 'etc/panel.json' \
   --exclude 'data' --exclude 'var' \
   "$HOST:$REMOTE/"
 
-# 5) 远端装配 + 冒烟
+# 6) 远端装配 + 冒烟
 ssh "$HOST" "
   mkdir -p $REMOTE/etc $REMOTE/var/state $REMOTE/data
   [ -f $REMOTE/etc/config.yaml ] || cp $REMOTE/etc/config.yaml.example $REMOTE/etc/config.yaml
