@@ -346,7 +346,8 @@ func cmdRemove(ctx ctx, name string, purge bool) error {
 		dir := filepath.Join(ctx.cfg.storagePath("dataDir"), name)
 		fmt.Println("purging data directory:", dir)
 		if err := os.RemoveAll(dir); err != nil {
-			return err
+			// 目录可能含 root 属主的历史残留；警告后继续移除任务配置。
+			fmt.Printf("warning: purge incomplete (%v)；请用 root 手动清理残留\n", err)
 		}
 	}
 	ctx.cfg.data["tasks"] = kept
