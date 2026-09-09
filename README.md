@@ -18,7 +18,7 @@
 | `plugins/` | 插件：plugin-git（SSH/HTTPS）、plugin-local（本地目录源） |
 | `archive/plugin-webdav/` | WebDAV 插件（已实现，暂不打包部署） |
 | `pkg/` | 共享包：protocol（协议与 IPC 类型单一真源）、pluginkit |
-| `panel/web/` | 面板前端（Vite + React + MUI，teal，明暗） |
+| `web/` | 面板前端（Vite + React + MUI，teal，明暗） |
 | `scripts/deploy.sh` | 部署助手（双目标：rpi2 / qwifi；rsync + systemd） |
 | `docs/` | 设计方案 / 验收报告 / 执行清单 |
 

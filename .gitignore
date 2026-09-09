@@ -19,3 +19,9 @@ dist/
 
 # deploy staging
 .deploy-staging/
+
+# playwright 测试工件
+.playwright-cli/
+
+# 构建产物（scripts 内嵌构建）
+scripts/.deploy-staging/
