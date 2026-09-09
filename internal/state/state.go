@@ -4,10 +4,10 @@ package state
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"path/filepath"
 
+	"edge-sync/internal/fsutil"
 	"edge-sync/pkg/protocol"
 )
 
@@ -53,14 +53,8 @@ func (s *Store) Save(task string, st *TaskState) error {
 	if err != nil {
 		return err
 	}
-	tmp := s.path(task) + ".tmp"
-	if err := os.WriteFile(tmp, raw, 0o644); err != nil {
-		return err
-	}
-	if err := os.Rename(tmp, s.path(task)); err != nil {
-		return fmt.Errorf("rename state file: %w", err)
-	}
-	return nil
+	// fsync + rename：掉电后不会出现「文件名已换、内容为空」的状态文件。
+	return fsutil.WriteFileAtomic(s.path(task), raw, 0o644)
 }
 
 func (s *Store) path(task string) string {

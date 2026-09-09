@@ -1,6 +1,6 @@
 packages:
   - protocol
-  - panel/web
+  - web
 
 onlyBuiltDependencies:
   - esbuild

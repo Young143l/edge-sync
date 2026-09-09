@@ -17,6 +17,7 @@ import (
 	"strings"
 	"time"
 
+	"edge-sync/internal/fsutil"
 	"edge-sync/pkg/protocol"
 )
 
@@ -115,7 +116,7 @@ func writeManifestFile(versionDir string, m protocol.Manifest) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join(versionDir, ManifestFile), raw, 0o644)
+	return fsutil.WriteFileAtomic(filepath.Join(versionDir, ManifestFile), raw, 0o644)
 }
 
 // ReadVersionManifest 读取版本目录内落盘的元数据；不存在返回 nil（老版本）。

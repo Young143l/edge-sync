@@ -12,6 +12,8 @@ set -euo pipefail
 TARGET=rpi2
 HOST=""
 PANEL=""
+TOKEN=""
+PORT=80
 DRY_RUN=0
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 STAGE="$ROOT/.deploy-staging"
@@ -26,6 +28,8 @@ while [[ $# -gt 0 ]]; do
     --target) TARGET="$2"; shift 2 ;;
     --host)   HOST="$2"; shift 2 ;;
     --panel)  PANEL="$2"; shift 2 ;;
+    --token)  TOKEN="$2"; shift 2 ;;
+    --port)   PORT="$2"; shift 2 ;;
     --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage ;;
     *) echo "[deploy] 未知参数: $1"; usage ;;
@@ -66,9 +70,9 @@ unset GOARM GOARCH GOOS CGO_ENABLED
 
 # 2) 前端（vite → 静态 dist）
 echo "[deploy] vite build (panel web)"
-(cd "$ROOT/panel/web" && pnpm build >/dev/null)
+(cd "$ROOT/web" && pnpm build >/dev/null)
 rm -rf "$STAGE/panel"
-cp -R "$ROOT/panel/web/dist" "$STAGE/panel"
+cp -R "$ROOT/web/dist" "$STAGE/panel"
 
 # 3) systemd 双 unit
 cat > "$STAGE/edge-syncd.service" <<UNIT
@@ -102,6 +106,7 @@ Requires=edge-syncd.service
 [Service]
 Type=simple
 WorkingDirectory=$REMOTE
+User=$SSH_USER
 ExecStart=$REMOTE/bin/edge-panel -c $REMOTE/etc/panel.json
 Restart=always
 RestartSec=5
@@ -123,9 +128,9 @@ tasks: []
 EOF
 cat > "$STAGE/etc/panel.json.example" <<EOF
 {
-  "port": 80,
+  "port": $PORT,
   "bind": "0.0.0.0",
-  "token": "",
+  "token": "$TOKEN",
   "socket": "$REMOTE/var/edge-syncd.sock",
   "dataDir": "$REMOTE/data",
   "webDir": "$REMOTE/panel"
@@ -164,6 +169,22 @@ ssh "$HOST" "
   $([ "$PANEL" = "always" ] && echo 'sudo systemctl enable --now edge-panel')
   systemctl is-active edge-syncd
   sleep 1
-  curl -s -o /dev/null -w 'panel http: %{http_code}\n' http://127.0.0.1:8080/ || true
+  curl -s -o /dev/null -w 'panel http: %{http_code}\n' http://127.0.0.1:$PORT/ || true
 "
-echo "[deploy] 完成"
+# 5) GitHub 通路体检（git 任务依赖 SSH 443 绕行的常见网络）
+echo "[deploy] GitHub 通路体检..."
+if ssh "$HOST" 'timeout 30 git ls-remote git@github.com:octocat/Hello-World.git HEAD >/dev/null 2>&1'; then
+  echo "[deploy] GitHub SSH 通路正常"
+else
+  echo "[deploy] ⚠ GitHub SSH 不可达（常见：运营商封 22 端口）。修复："
+  echo "[deploy]   在设备 ~/.ssh/config 加："
+  cat <<'HINT'
+Host github.com
+  HostName ssh.github.com
+  Port 443
+  User git
+HINT
+  echo "[deploy]   （设备已有密钥时无需额外配置；详见 README 部署手册）"
+fi
+
+echo "[deploy] 完成。添加同步任务：$REMOTE/bin/edge-sync -c $REMOTE/etc/config.yaml add"

@@ -98,6 +98,9 @@ func (f *flagSet) Get(key string) string { return f.m[key] }
 
 func (f *flagSet) Bool(key string) bool { return f.m[key] == "true" }
 
+// boolFlags 无值的开关（后面的参数是位置参数，不是 flag 值）。
+var boolFlags = map[string]bool{"purge": true, "wait": true}
+
 func parseFlags(args []string) (*flagSet, []string) {
 	f := &flagSet{m: map[string]string{}}
 	var positional []string
@@ -105,7 +108,9 @@ func parseFlags(args []string) (*flagSet, []string) {
 		a := args[i]
 		if len(a) > 2 && a[:2] == "--" {
 			key := a[2:]
-			if i+1 < len(args) && len(args[i+1]) > 0 && args[i+1][0] != '-' {
+			if boolFlags[key] {
+				f.m[key] = "true"
+			} else if i+1 < len(args) && len(args[i+1]) > 0 && args[i+1][0] != '-' {
 				f.m[key] = args[i+1]
 				i++
 			} else {

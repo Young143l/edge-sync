@@ -73,3 +73,47 @@
 | 阶段 5 全部实机项 | 树莓派 SSH |
 
 **结论**：阶段 0-4 验收通过。下一步：阶段 5 部署实机（等 SSH）。
+
+---
+
+# 阶段 5 实机验收记录（2026-09-09，树莓派 2B / Raspbian 12 / armv7l）
+
+## 部署与运行
+
+| 项 | 结果 |
+|---|---|
+| deploy.sh 双目标构建 | ✅ rpi2=ELF 32-bit ARM 静态；qwifi=ELF aarch64（dry-run 验证） |
+| 一键部署（rsync + systemd 双 unit） | ✅ 实机 active×2 |
+| RSS 实机 | ✅ syncd **4.2-9.5MB**、panel **6.4-7.2MB**（远优于 <25/<60 目标） |
+| kill -9 自愈 | ✅ sudo kill 后 6s 内拉起（新 PID）、面板 200 |
+| demo 任务（local 源） | ✅ reload/sync/版本生成/内容核对 |
+| CLI（Go 版）13 命令 | ✅ 实机全流程 |
+
+## GitHub 真实链路
+
+| 项 | 结果 |
+|---|---|
+| 设备密钥认证（Young143l） | ✅（22 端口被运营商封 → **ssh.github.com:443 绕行**，写设备 ~/.ssh/config） |
+| TypechoCli（公共）首次拉取 | ✅ 秒级，版本生成 |
+| 二次同步短路 | ✅ ls-remote hash 未变 → no change 零下载 |
+| Young143Blog（私有）真实拉取 | ✅ 网络窗口波动致首两次超时；**任务级 snapshotTimeout 放宽（5m/15m）后 45s 完成全量**；面板 API 确认 idle/0 fails |
+
+## 部署过程发现并修复（全部回写 deploy.sh 模板/代码）
+
+1. rsync /opt 无权限 → 部署脚本加 sudo mkdir+chown 预备步骤
+2. socket 路径分裂（内核默认相对 etc/ 解析 vs panel.json 绝对路径）→ config 模板补显式 server.socket
+3. panel.json.example 缺 webDir → 面板 SPA 未托管（手机访问"not configured"）→ 模板补齐
+4. 内核以 root 运行导致 git 认证失效（root 无用户密钥/443 配置）→ unit 模板加 User=部署用户
+5. CLI remove --purge 遇 root 属主残留失败阻断任务移除 → 改警告继续
+6. 令牌定制（143335）与面板端口（80）按用户要求落设备并同步模板
+
+## 设备侧配置固化
+
+- `~/.ssh/config`：github.com → ssh.github.com:443（443 绕行）
+- 任务：young143blog（git/5m/snapshotTimeout 5m/fetchTimeout 15m/keepLast 5）
+- panel.json：port 80、token 143335、webDir /opt/edge-sync/panel
+
+## 结论
+
+阶段 5 主体完成：双服务实机运行、GitHub 私有仓库真实链路全通。
+剩余：24h 稳定观察（重启自启已 enable；网络窗口由退避机制消化）。

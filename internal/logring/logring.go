@@ -54,12 +54,22 @@ func (r *Ring) Tail(n int, task string) []Entry {
 	out := make([]Entry, 0, n)
 	for i := r.count - n; i < r.count; i++ {
 		e := r.buf[(r.head+i)%len(r.buf)]
-		if task != "" && !strings.Contains(e.Attrs, "task="+task) {
-			continue
+		if task != "" && !hasTask(e.Attrs, task) {
+			continue // 精确匹配：task=demo 不应误中 task=demo2
 		}
 		out = append(out, e)
 	}
 	return out
+}
+
+// hasTask 按 token 精确匹配 attrs 中的 task 键（避免 demo 误中 demo2）。
+func hasTask(attrs, task string) bool {
+	for _, tok := range strings.Fields(attrs) {
+		if tok == "task="+task {
+			return true
+		}
+	}
+	return false
 }
 
 // Handler slog.Handler：写入环形缓冲并转发底层。

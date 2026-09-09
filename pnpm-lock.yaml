@@ -18,11 +18,20 @@ importers:
         specifier: ^5.7.0
         version: 5.9.3
 
-  panel/web:
+  protocol:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.20.1
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
+  web:
     dependencies:
       '@edge-sync/protocol':
         specifier: workspace:*
-        version: link:../../protocol
+        version: link:../protocol
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.2.18)(react@19.2.8)
@@ -63,15 +72,6 @@ importers:
       vite:
         specifier: ^6.0.0
         version: 6.4.3(@types/node@22.20.1)(tsx@4.23.13)(yaml@2.9.0)
-
-  protocol:
-    devDependencies:
-      '@types/node':
-        specifier: ^22.10.0
-        version: 22.20.1
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
 
 packages:
 

@@ -380,7 +380,7 @@ tasks:
     plugin: git
     enabled: true
     interval: 300s
-    snapshotTimeout: 60s
+    snapshotTimeout: 60s   # 慢网络（手机热点/443 绕行）建议放宽到 5m
     fetchTimeout: 300s
     options:
       url: git@github.com:me/notes.git

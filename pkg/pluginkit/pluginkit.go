@@ -230,6 +230,10 @@ func CopyWithHash(src, destPath string) (int64, string, error) {
 	}
 	hash := sha256.New()
 	size, err := io.Copy(io.MultiWriter(dst, hash), f)
+	if err == nil {
+		// fsync：掉电后 staging 落盘的文件内容必须完整。
+		err = dst.Sync()
+	}
 	if cerr := dst.Close(); err == nil {
 		err = cerr
 	}
@@ -252,6 +256,10 @@ func WriteContentWithHash(content []byte, destPath string) (int64, string, error
 	tmp := destPath + ".part"
 	if err := os.WriteFile(tmp, content, 0o644); err != nil {
 		return 0, "", err
+	}
+	if f, err := os.OpenFile(tmp, os.O_WRONLY, 0); err == nil {
+		_ = f.Sync()
+		f.Close()
 	}
 	if err := os.Rename(tmp, destPath); err != nil {
 		os.Remove(tmp)
