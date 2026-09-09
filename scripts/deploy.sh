@@ -121,7 +121,7 @@ tasks: []
 EOF
 cat > "$STAGE/etc/panel.json.example" <<EOF
 {
-  "port": 8080,
+  "port": 80,
   "bind": "0.0.0.0",
   "token": "",
   "socket": "$REMOTE/var/edge-syncd.sock",

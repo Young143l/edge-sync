@@ -71,4 +71,4 @@ tasks:
 sudo systemctl restart edge-panel
 ```
 
-浏览器打开 `http://<设备IP>:8080`，输入 token 即可；下载由 HttpOnly Cookie 授权，登录一次后 30 天免密。
+浏览器打开 `http://<设备IP>`（端口 80），输入 token 即可；下载由 HttpOnly Cookie 授权，登录一次后 30 天免密。
