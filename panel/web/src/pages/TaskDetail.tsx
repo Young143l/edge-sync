@@ -366,7 +366,7 @@ function FilesTab(props: {
         </Button>
       </Box>
 
-      <Breadcrumbs sx={{ mb: 1 }}>
+      <Breadcrumbs sx={{ mb: 1 }} maxItems={4} itemsBeforeCollapse={1} itemsAfterCollapse={2}>
         <Link component="button" onClick={() => props.onNavigate('')} sx={{ cursor: 'pointer' }}>
           全部文件
         </Link>
@@ -390,13 +390,15 @@ function FilesTab(props: {
       )}
 
       <TableContainer component={Paper} variant="outlined">
-        <Table size="small">
+        <Table size="small" sx={{ tableLayout: 'fixed', width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableCell>名称</TableCell>
-              <TableCell align="right">大小</TableCell>
-              <TableCell>修改时间</TableCell>
-              <TableCell align="right">操作</TableCell>
+              <TableCell sx={{ width: 'auto' }}>名称</TableCell>
+              <TableCell align="right" sx={{ width: 76 }}>大小</TableCell>
+              <TableCell sx={{ width: { xs: 0, sm: 150 }, display: { xs: 'none', sm: 'table-cell' } }}>
+                修改时间
+              </TableCell>
+              <TableCell align="right" sx={{ width: { xs: 88, sm: 104 } }}>操作</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -509,25 +511,58 @@ function FileRow(props: {
   const full = joinPath(props.base, props.f.name)
   return (
     <TableRow hover>
-      <TableCell>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <TableCell sx={{ overflow: 'hidden' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            minWidth: 0,
+          }}
+          title={props.f.name}
+        >
           {props.f.isDir ? (
-            <FolderIcon color="primary" fontSize="small" />
+            <FolderIcon color="primary" fontSize="small" sx={{ flexShrink: 0 }} />
           ) : (
-            <FileIcon fontSize="small" />
+            <FileIcon fontSize="small" sx={{ flexShrink: 0 }} />
           )}
-          {props.f.isDir ? (
-            <Link component="button" onClick={() => props.onNavigate(full)} sx={{ cursor: 'pointer' }}>
-              {props.f.name}
-            </Link>
-          ) : (
-            props.f.name
-          )}
+          <Typography
+            variant="body2"
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              minWidth: 0,
+            }}
+          >
+            {props.f.isDir ? (
+              <Link
+                component="button"
+                onClick={() => props.onNavigate(full)}
+                sx={{ cursor: 'pointer' }}
+              >
+                {props.f.name}
+              </Link>
+            ) : (
+              props.f.name
+            )}
+          </Typography>
         </Box>
       </TableCell>
       <TableCell align="right">{props.f.isDir ? '—' : humanBytes(props.f.size)}</TableCell>
-      <TableCell>{props.f.mtime ? props.f.mtime.replace('T', ' ').slice(0, 19) : '—'}</TableCell>
-      <TableCell align="right">
+      <TableCell
+        sx={{
+          display: { xs: 'none', sm: 'table-cell' },
+        }}
+      >
+        {props.f.mtime ? props.f.mtime.replace('T', ' ').slice(0, 19) : '—'}
+      </TableCell>
+      <TableCell
+        align="right"
+        sx={{
+          whiteSpace: 'nowrap',
+        }}
+      >
         {!props.f.isDir && (
           <>
             <IconButton
