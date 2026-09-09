@@ -172,4 +172,3 @@ export interface LogEntry {
   attrs?: string
 }
 
-export * from './ipc.js'
