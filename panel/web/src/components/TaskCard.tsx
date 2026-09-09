@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import {
-  Alert, Button, Card, CardActions, CardContent, Dialog, DialogActions,
+  Alert,
+  Box, Button, Card, CardActions, CardContent, Dialog, DialogActions,
   DialogContent, DialogContentText, DialogTitle, LinearProgress, Snackbar,
   Typography,
 } from '@mui/material'
@@ -50,11 +51,9 @@ export function TaskCard({ task }: { task: TaskSummary }): React.JSX.Element {
         <Typography variant="caption" color="text.secondary">
           下次运行：{task.nextRunAt ? shortTime(task.nextRunAt) : '-'}
         </Typography>
-        {syncing && (
-          <Typography sx={{ mt: 1 }}>
-            <LinearProgress />
-          </Typography>
-        )}
+        <Box sx={{ mt: 1, height: 4 }}>
+          {syncing && <LinearProgress />}
+        </Box>
       </CardContent>
       <CardActions sx={{ px: 2, pb: 2 }}>
         <Button

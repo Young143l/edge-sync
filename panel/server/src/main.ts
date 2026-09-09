@@ -152,7 +152,10 @@ function buildApp(cfg: PanelConfig): Hono {
     app.get('*', (c) => {
       const index = join(cfg.webDir!, 'index.html')
       if (existsSync(index)) {
-        return c.body(readFileSync(index), 200, { 'Content-Type': 'text/html; charset=utf-8' })
+        return c.body(readFileSync(index), 200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-cache',
+      })
       }
       return c.text('panel web dist not built', 404)
     })

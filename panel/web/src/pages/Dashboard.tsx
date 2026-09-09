@@ -17,7 +17,7 @@ export function DashboardPage(): React.JSX.Element {
         <Alert
           severity={failed > 0 ? 'error' : syncing > 0 ? 'warning' : 'success'}
           variant="outlined"
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, minHeight: 44 }}
         >
           {tasks.length} 个任务 · {syncing} 同步中
           {failed > 0 ? ` · ${failed} 个失败` : ''} · 服务正常轮询中
@@ -35,6 +35,7 @@ export function DashboardPage(): React.JSX.Element {
           sx={{
             display: 'grid',
             gap: 2,
+            alignItems: 'start',
             gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
           }}
         >

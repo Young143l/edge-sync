@@ -93,7 +93,7 @@ export function Layout({ children }: { children: React.ReactNode }): React.JSX.E
   )
 
   return (
-    <Box sx={{ display: 'flex', minHeight: { xs: '100dvh', md: '100vh' } }}>
+    <Box sx={{ display: 'flex', minHeight: { xs: '100svh', sm: '100svh', md: '100vh' } }}>
       <AppBar
         position="fixed"
         sx={{ zIndex: (t) => t.zIndex.drawer + 1 }}

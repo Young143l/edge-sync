@@ -219,13 +219,41 @@ function OverviewTab(props: {
           </Typography>
         ) : (
           syncRecords.map((l, i) => (
-            <Typography
-              key={i}
-              variant="body2"
-              sx={{ fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-            >
-              {shortTime(l.time)} {l.msg} {l.attrs ?? ''}
-            </Typography>
+            <Box key={i} sx={{ mb: 1.25 }}>
+              <Box sx={{ display: 'flex', gap: 1, alignItems: 'baseline' }}>
+                <Typography variant="caption" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
+                  {shortTime(l.time)}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: l.msg === 'sync failed' ? 600 : 500 }}
+                >
+                  {l.msg === 'synced'
+                    ? '同步完成'
+                    : l.msg === 'no change'
+                      ? '无变更'
+                      : l.msg === 'sync failed'
+                        ? '同步失败'
+                        : l.msg}
+                </Typography>
+              </Box>
+              {l.attrs && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontFamily: 'monospace',
+                    wordBreak: 'break-all',
+                    whiteSpace: 'pre-wrap',
+                    display: 'block',
+                    color: 'text.secondary',
+                    pl: 2,
+                  }}
+                >
+                  {l.attrs.replace('task=demo ', '')}
+                </Typography>
+              )}
+              <Divider sx={{ mt: 1 }} />
+            </Box>
           ))
         )}
       </Paper>
