@@ -18,9 +18,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"encoding/json"
 	"edge-sync/pkg/pluginkit"
 	"edge-sync/pkg/protocol"
+	"encoding/json"
 )
 
 const (
