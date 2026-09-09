@@ -3,11 +3,10 @@ node_modules/
 dist/
 *.tsbuildinfo
 
-# Go build artifacts
-edge-syncd
-plugin-git
-plugin-webdav
-plugin-mock
+# 构建产物（输出到 .deploy-staging/bin，整目录忽略）
+.deploy-staging/
+
+# Go 测试
 *.test
 
 # Deploy / local

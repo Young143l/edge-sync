@@ -1,6 +1,0 @@
-{
-  "port": 8080,
-  "bind": "0.0.0.0",
-  "socket": "/opt/edge-sync/var/edge-syncd.sock",
-  "dataDir": "/opt/edge-sync/data"
-}
