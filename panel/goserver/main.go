@@ -32,8 +32,7 @@ func main() {
 		log.Fatalf(`panel.json missing "dataDir"`)
 	}
 
-	client := &IPCClient{SocketPath: cfg.Socket}
-	srv := &panelServer{cfg: cfg, ipc: client}
+	srv := newPanelServer(cfg)
 
 	httpSrv := &http.Server{
 		Addr:              fmt.Sprintf("%s:%d", cfg.Bind, cfg.Port),
