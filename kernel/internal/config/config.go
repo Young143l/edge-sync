@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"edge-sync/pkg/protocol"
 	"gopkg.in/yaml.v3"
 )
 
@@ -55,13 +56,8 @@ type LogConfig struct {
 	Level string `yaml:"level"`
 }
 
-// Retention 版本保留策略。
-// KeepLast=0 表示不按数量限制（仅 keepDays 生效）；
-// KeepDays=0 表示不按时间限制（仅 keepLast 生效）。
-type Retention struct {
-	KeepLast int `yaml:"keepLast"`
-	KeepDays int `yaml:"keepDays"`
-}
+// Retention 版本保留策略（定义见 pkg/protocol，yaml/json 双侧共享）。
+type Retention = protocol.Retention
 
 type Task struct {
 	Name            string         `yaml:"name"`

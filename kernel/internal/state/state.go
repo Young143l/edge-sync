@@ -11,12 +11,8 @@ import (
 	"edge-sync/pkg/protocol"
 )
 
-// Stats 任务累计统计。
-type Stats struct {
-	TotalSyncs int   `json:"totalSyncs"` // 成功同步次数
-	TotalFiles int   `json:"totalFiles"` // 累计拉取文件数
-	TotalBytes int64 `json:"totalBytes"` // 累计拉取字节数
-}
+// Stats 任务累计统计（定义见 pkg/protocol）。
+type Stats = protocol.Stats
 
 // TaskState 单任务持久化状态。
 type TaskState struct {

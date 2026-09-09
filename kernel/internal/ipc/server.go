@@ -25,55 +25,15 @@ import (
 	"edge-sync/pkg/protocol"
 )
 
-// TaskSummary 任务摘要（task.list / task.status 基础字段）。
-type TaskSummary struct {
-	Name                string `json:"name"`
-	Plugin              string `json:"plugin"`
-	Enabled             bool   `json:"enabled"`
-	Status              string `json:"status"` // idle | syncing
-	Interval            string `json:"interval"`
-	LastSyncAt          string `json:"lastSyncAt,omitempty"`
-	LastSuccessAt       string `json:"lastSuccessAt,omitempty"`
-	ConsecutiveFailures int    `json:"consecutiveFailures"`
-	NextRunAt           string `json:"nextRunAt,omitempty"`
-}
-
-// TaskDetail 单任务详情。
-type TaskDetail struct {
-	TaskSummary
-	Retention config.Retention `json:"retention"`
-	Stats     state.Stats      `json:"stats"`
-}
-
-// VersionInfo 版本条目。
-type VersionInfo struct {
-	Version   string `json:"version"`
-	Files     int    `json:"files"`
-	Bytes     int64  `json:"bytes"`
-	IsCurrent bool   `json:"isCurrent"`
-}
-
-// FileListEntry 版本目录内的条目。
-type FileListEntry struct {
-	Name  string `json:"name"`
-	IsDir bool   `json:"isDir"`
-	Size  int64  `json:"size"`
-	MTime string `json:"mtime,omitempty"`
-}
-
-// FileVersionEntry 单文件在历史版本中的出现记录（仅列出与上一版本不同的时点）。
-type FileVersionEntry struct {
-	Version     string `json:"version"`
-	Fingerprint string `json:"fingerprint"`
-	Size        int64  `json:"size,omitempty"`
-}
-
-// PluginInfo 插件元信息。
-type PluginInfo struct {
-	Name         string          `json:"name"`
-	Version      string          `json:"version"`
-	ConfigSchema json.RawMessage `json:"configSchema,omitempty"`
-}
+// 任务/历史/插件类型定义见 pkg/protocol（面板 client 共享同一真源）。
+type (
+	TaskSummary      = protocol.TaskSummary
+	TaskDetail       = protocol.TaskDetail
+	VersionInfo      = protocol.VersionInfo
+	FileListEntry    = protocol.FileListEntry
+	FileVersionEntry = protocol.FileVersionEntry
+	PluginInfo       = protocol.PluginInfo
+)
 
 // Deps Server 依赖（cfg 经锁访问，reload 后替换）。
 type Deps struct {
