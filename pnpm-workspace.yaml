@@ -1,7 +1,6 @@
 packages:
-  - cli
   - protocol
-  - panel/*
+  - panel/web
 
 onlyBuiltDependencies:
   - esbuild

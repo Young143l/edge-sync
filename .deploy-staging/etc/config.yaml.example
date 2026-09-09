@@ -1,0 +1,5 @@
+storage:
+  dataDir: /opt/edge-sync/data
+  stateDir: /opt/edge-sync/var/state
+  pluginBinDir: /opt/edge-sync/bin
+tasks: []

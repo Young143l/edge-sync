@@ -57,7 +57,8 @@
 - [x] `plugin-git`：`git ls-remote` 轮询、缓存仓库 init/fetch `--depth 1`（token 只经命令行不落盘）、`ls-files` blob hash 生成 Manifest、commit hash 短路、symlink 内容拉取、SSH keyFile（GIT_SSH_COMMAND）、认证错误分类
 - [x] 本地联调（真实内核驱动双任务）：WebDAV 本地服务器 + 本地 git 仓库
 - [x] 测试：webdav 7 项（快照/变更检测/Depth 降级/认证/指纹策略/options 校验/Range 续传）；git 6 项（快照/新 commit 检测/缺失分支/缺 options/buildAuthURL/token 校验）
-- [ ] 真实远端源联调（**待用户提供**：测试 WebDAV 地址+账号；测试 Git 仓库）
+- [x] ~~WebDAV 真实源联调~~ **用户决策：WebDAV 暂舍弃**（插件代码与测试保留在仓库，部署矩阵不含；后续恢复零成本）
+- [ ] 真实 GitHub SSH 私有仓库联调（**待用户提供** deploy key；README 已有完整步骤）
 - [ ] 大文件（≥100MB）真实下载与中断重试（依赖真实源联调）
 
 **验收**（本地部分全部通过）：

@@ -1,0 +1,15 @@
+[Unit]
+Description=edge-sync web panel
+After=edge-syncd.service
+Requires=edge-syncd.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/edge-sync
+ExecStart=/opt/edge-sync/bin/edge-panel -c /opt/edge-sync/etc/panel.json
+Restart=always
+RestartSec=5
+MemoryMax=128M
+
+[Install]
+WantedBy=multi-user.target
