@@ -3,9 +3,6 @@ node_modules/
 dist/
 *.tsbuildinfo
 
-# 构建产物（输出到 .deploy-staging/bin，整目录忽略）
-.deploy-staging/
-
 # Go 测试
 *.test
 
@@ -13,15 +10,9 @@ dist/
 .env
 .env.*
 *.local
-
-# OS
-.DS_Store
-
-# deploy staging
 .deploy-staging/
-
-# playwright 测试工件
-.playwright-cli/
-
-# 构建产物（scripts 内嵌构建）
 scripts/.deploy-staging/
+
+# OS / 测试工件
+.DS_Store
+.playwright-cli/

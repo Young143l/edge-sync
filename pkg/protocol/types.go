@@ -1,6 +1,6 @@
 // Package protocol 定义内核与外部进程插件之间的通信类型。
-// 本文件与 protocol/schema/*.schema.json 及 protocol/src/index.ts（TS 侧）
-// 保持对齐，schema 为单一真源，修改须三处同步。
+// 报文/字段/错误码的规范描述见 docs/DESIGN.md §3；
+// TS 侧对应 protocol/src/index.ts，修改须双侧同步。
 package protocol
 
 import "encoding/json"
@@ -15,7 +15,7 @@ const (
 	MethodFetchFile  = "fetchFile"
 )
 
-// JSON-RPC 2.0 与插件自定义错误码（见 schema/envelope.schema.json errorCodes）。
+// JSON-RPC 2.0 与插件自定义错误码（DESIGN §3.4）。
 const (
 	CodeParseError        = -32700
 	CodeInvalidRequest    = -32600
