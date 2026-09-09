@@ -393,11 +393,34 @@ function FilesTab(props: {
         onClose={() => setFileVersionsOpen(null)}
         slotProps={{ paper: { sx: { width: { xs: '100vw', sm: 380 }, p: 2 } } }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontSize: 16, wordBreak: 'break-all' }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 1,
+          // 手机端安全区（刘海屏）
+          mt: { xs: 'env(safe-area-inset-top)', sm: 0 },
+        }}>
+          <Typography
+            variant="h6"
+            sx={{
+              flexGrow: 1,
+              minWidth: 0,
+              fontSize: 16,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+            }}
+            title={`文件历史：${fileVersionsOpen}`}
+          >
             文件历史：{fileVersionsOpen}
           </Typography>
-          <IconButton onClick={() => setFileVersionsOpen(null)}>
+          <IconButton
+            onClick={() => setFileVersionsOpen(null)}
+            sx={{ flexShrink: 0 }}
+            aria-label="关闭文件历史"
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -406,6 +429,7 @@ function FilesTab(props: {
           <FileVersionsPanel
             name={props.name}
             path={joinPath(props.path, fileVersionsOpen)}
+            onClose={() => setFileVersionsOpen(null)}
           />
         )}
       </Drawer>
@@ -495,7 +519,11 @@ function FileRow(props: {
   )
 }
 
-function FileVersionsPanel(props: { name: string; path: string }): React.JSX.Element {
+function FileVersionsPanel(props: {
+  name: string
+  path: string
+  onClose: () => void
+}): React.JSX.Element {
   const { data } = useFileVersions(props.name, props.path)
   if (data === undefined) return <Typography color="text.secondary">加载中…</Typography>
   if (data.length === 0) {
@@ -505,7 +533,7 @@ function FileVersionsPanel(props: { name: string; path: string }): React.JSX.Ele
     <>
       {data.map((v) => (
         <Box key={v.version} sx={{ mb: 1.5 }}>
-          <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+          <Typography variant="body2" sx={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
             {v.version}
           </Typography>
           <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
@@ -522,6 +550,9 @@ function FileVersionsPanel(props: { name: string; path: string }): React.JSX.Ele
           <Divider sx={{ mt: 1 }} />
         </Box>
       ))}
+      <Button variant="text" fullWidth onClick={props.onClose} sx={{ mt: 1 }}>
+        关闭
+      </Button>
     </>
   )
 }
