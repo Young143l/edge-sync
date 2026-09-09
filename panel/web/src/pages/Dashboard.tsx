@@ -1,4 +1,4 @@
-import { Alert, Box, Typography } from '@mui/material'
+import { Alert, Box } from '@mui/material'
 import { useOverview } from '../query'
 import { TaskCard } from '../components/TaskCard'
 import { EmptyState, LoadingCards, OfflineBanner } from '../components/Shared'
@@ -43,10 +43,6 @@ export function DashboardPage(): React.JSX.Element {
             <TaskCard key={t.name} task={t} />
           ))}
         </Box>
-      )}
-
-      {error && tasks === undefined && (
-        <Typography color="text.secondary">{String(error)}</Typography>
       )}
     </Box>
   )
