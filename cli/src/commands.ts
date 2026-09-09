@@ -3,7 +3,7 @@ import { cp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises'
 import { basename, dirname, join } from 'node:path'
 import { realpath } from 'node:fs/promises'
 import { ConfigFile, parseYaml, stringifyYaml } from './config-io.js'
-import { ipcCall } from './ipc.js'
+import { ipcCall } from '@edge-sync/protocol'
 import { hr, humanBytes, pad, row, statusBadge, timeAgo } from './format.js'
 import type {
   FileListEntry,

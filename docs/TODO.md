@@ -94,24 +94,26 @@
 
 ## 阶段 4：Web 面板（纯开发机）
 
+> 专项设计：`docs/panel-design.md`（已确认 v1：teal 主色 / 卡片网格 / 不加增强 / 详情页双 Tab）。验收清单 12 条见该文档第 5 节。
+
 ### 4a server
-- [ ] Hono 服务：REST API（overview / tasks / sync / history / files / file-versions / logs）
-- [ ] Bearer token 鉴权中间件（panel.json，首装随机生成）
-- [ ] 文件下载流（fs.createReadStream + 路径白名单防穿越）
-- [ ] 整版本 zip 流式打包（archiver，store 模式可选，>500MB 提示字段）
-- [ ] 下载并发限制（1~2）
+- [ ] `panel/server`：Hono + @hono/node-server，panel.json 配置（port/bind/token/socket/dataDir，缺 token 自动生成回写）
+- [ ] Bearer token 鉴权（/api/*）；IPC 错误→HTTP 映射（404/400/503/502）
+- [ ] 状态类路由（overview / task / sync / history / files / file-versions / logs / plugins 转发 IPC）
+- [ ] 下载流：单文件（fs + 路径白名单）+ 整版本 zip（archiver 流式，store=1，X-Edge-Sync-Bytes / >500MB 建议）
+- [ ] 下载并发限流（全局 2 + 429 兜底）
+- [ ] curl 端到端冒烟（真实内核 + 401/200/404 断言）
 
 ### 4b web（React + MUI，MD 风格）
-- [ ] Vite + React + MUI + TanStack Query + React Router 脚手架
-- [ ] 布局：App Bar + Navigation Drawer（小屏收起）+ 明暗主题
-- [ ] 仪表盘：任务卡片网格（状态 Chip、LinearProgress、上次同步、文件数/体积）
-- [ ] 任务详情：立即同步（Dialog 确认 + Snackbar）、版本 Timeline
-- [ ] 版本浏览与下载：Breadcrumbs 文件树、行内下载、整版本 zip、单文件历史侧栏
+- [ ] Vite + React + MUI + TanStack Query + React Router 脚手架 + teal 主题（明暗双 scheme）
+- [ ] 布局：App Bar（状态 Chip/刷新/明暗切换）+ Drawer（仪表盘/日志/设置）+ 响应式断点
+- [ ] 仪表盘：任务卡片网格（四态 Chip、LinearProgress、文件数/体积、服务概览条）
+- [ ] 任务详情（双 Tab）：概览（版本 Timeline + 最近同步 + 立即同步 Dialog）| 版本与文件（面包屑文件树 + 下载 + 单文件历史 Drawer + zip）
 - [ ] 日志页、设置页（只读摘要）
+- [ ] 登录 token Dialog + 内核离线横幅 + 401 处理
+- [ ] 浏览器端到端闭环验收（对照 panel-design 验收清单 1~11）
 
-**验收**：浏览器完成闭环「看状态 → 触发同步 → 浏览版本 → 下载单文件 → 下载 zip」；token 未授权请求被拒
-
-**状态**：未开始
+**状态**：进行中（4a）
 
 ---
 

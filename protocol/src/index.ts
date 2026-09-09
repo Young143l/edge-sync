@@ -9,6 +9,9 @@
 /** 插件协议版本，initialize 握手时校验。 */
 export const PROTOCOL_VERSION = 1
 
+/** 版本目录内元数据文件名（与内核 engine.ManifestFile 对齐）。 */
+export const MANIFEST_FILE = '.edge-sync-manifest.json' as const
+
 /** 方法名。 */
 export const PluginMethod = {
   Initialize: 'initialize',
@@ -168,3 +171,5 @@ export interface LogEntry {
   msg: string
   attrs?: string
 }
+
+export * from './ipc.js'
