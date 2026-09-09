@@ -14,11 +14,12 @@ import { DashboardPage } from './pages/Dashboard'
 import { TaskDetailPage } from './pages/TaskDetail'
 import { LogsPage } from './pages/Logs'
 import { SettingsPage } from './pages/Settings'
-import { getToken, setToken, onUnauthorized } from './api'
+import { getToken, setToken, onUnauthorized, loginWithToken } from './api'
 
 export function App(): React.JSX.Element {
   const [authed, setAuthed] = useState<boolean>(!!getToken())
   const [loginOpen, setLoginOpen] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
 
   onUnauthorized(() => {
     setAuthed(false)
@@ -26,26 +27,34 @@ export function App(): React.JSX.Element {
   })
 
   const submitToken = (t: string): void => {
-    setToken(t)
-    setAuthed(true)
-    setLoginOpen(false)
-    window.location.reload() // 以新 token 重取全部 query
+    loginWithToken(t)
+      .then(() => {
+        setToken(t)
+        setAuthed(true)
+        setLoginOpen(false)
+        window.location.reload() // 以新凭证重取全部 query
+      })
+      .catch(() => setLoginError('token 不正确，请重试'))
   }
 
   return (
     <>
       <Layout>
-        <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/task/:name" element={<TaskDetailPage />} />
-          <Route path="/logs" element={<LogsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-        </Routes>
+        {/* 未授权时主内容不渲染（避免 401 错误文案与登录框同显） */}
+        {authed ? (
+          <Routes>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/task/:name" element={<TaskDetailPage />} />
+            <Route path="/logs" element={<LogsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        ) : null}
       </Layout>
       <LoginDialog
         open={loginOpen || !authed}
         canClose={authed}
         onSubmit={submitToken}
+        error={loginError}
         onClose={() => setLoginOpen(false)}
       />
     </>
@@ -55,6 +64,7 @@ export function App(): React.JSX.Element {
 function LoginDialog(props: {
   open: boolean
   canClose: boolean
+  error?: string | null
   onSubmit: (token: string) => void
   onClose: () => void
 }): React.JSX.Element {
@@ -64,6 +74,7 @@ function LoginDialog(props: {
       <DialogTitle>访问令牌</DialogTitle>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <DialogContentText>输入面板访问令牌（见 etc/panel.json）</DialogContentText>
+        {props.error && <DialogContentText color="error">{props.error}</DialogContentText>}
         <TextField
           autoFocus
           label="token"

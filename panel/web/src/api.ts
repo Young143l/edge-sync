@@ -37,6 +37,16 @@ export function onUnauthorized(fn: UnauthorizedCb): void {
   cb = fn
 }
 
+/** 登录：本地存 token（供 API 调用）+ 请服务端种 HttpOnly cookie（供 a[href] 下载）。 */
+export async function loginWithToken(t: string): Promise<void> {
+  const resp = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${t}` },
+    body: JSON.stringify({ token: t }),
+  })
+  if (!resp.ok) throw new ApiError(resp.status, 'token 不正确')
+}
+
 export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers)
   const token = getToken()

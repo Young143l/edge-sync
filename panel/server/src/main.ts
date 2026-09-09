@@ -1,8 +1,10 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { Hono } from 'hono'
-import { bearerAuth } from 'hono/bearer-auth'
+import { getCookie, setCookie } from 'hono/cookie'
 import { HTTPException } from 'hono/http-exception'
+
+const COOKIE_NAME = 'edge-sync-token'
 import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import {
@@ -112,7 +114,32 @@ function stateRoutes(cfg: PanelConfig): Hono {
 function buildApp(cfg: PanelConfig): Hono {
   const app = new Hono()
 
-  app.use('/api/*', bearerAuth({ token: cfg.token }))
+  // 登录：校验 token 并种 HttpOnly Cookie —— 浏览器原生导航（<a href> 下载 /
+  // location.href zip）会自动携带 cookie，Bearer 仅保留给 API 客户端。
+  app.post('/api/auth/login', async (c) => {
+    const body = (await c.req.json().catch(() => ({}))) as { token?: string }
+    if (body.token !== cfg.token) {
+      return c.json({ error: 'token 不正确' }, 401)
+    }
+    setCookie(c, COOKIE_NAME, cfg.token, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 30 * 24 * 3600,
+      sameSite: 'Lax',
+    })
+    return c.json({ ok: true })
+  })
+
+  // 鉴权：Cookie（浏览器）或 Bearer（API 客户端）二选一。
+  app.use('/api/*', async (c, next) => {
+    const cookie = getCookie(c, COOKIE_NAME)
+    const auth = c.req.header('Authorization') ?? ''
+    if (cookie !== cfg.token && auth !== `Bearer ${cfg.token}`) {
+      return c.json({ error: '需要访问令牌' }, 401)
+    }
+    await next()
+  })
+
   app.route('/api', stateRoutes(cfg))
 
   // 下载流（fs 直读，不过内核）。
@@ -135,7 +162,7 @@ function buildApp(cfg: PanelConfig): Hono {
     )
   }
 
-  // 全局错误兜底（401 由 bearerAuth 直接返回）。
+  // 全局错误兜底（401 原样透传）。
   app.onError((e, c) => {
     if (e instanceof HTTPException) return e.getResponse()
     if (e instanceof HttpError) return c.json({ error: e.message }, e.status as ContentfulStatusCode)

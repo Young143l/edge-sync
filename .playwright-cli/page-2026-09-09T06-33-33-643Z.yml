@@ -1,0 +1,30 @@
+- generic [ref=f22e3]:
+  - banner [ref=f22e4]:
+    - generic [ref=f22e5]:
+      - heading "edge-sync" [level=6] [ref=f22e6]
+      - generic [ref=f22e7]: 运行中
+      - button "刷新全部" [ref=f22e10] [cursor=pointer]
+      - button "切换明暗" [ref=f22e13] [cursor=pointer]
+  - generic [ref=f22e17]:
+    - list [ref=f22e19]:
+      - link "仪表盘" [ref=f22e20] [cursor=pointer]:
+        - /url: /
+      - link "日志" [ref=f22e26] [cursor=pointer]:
+        - /url: /logs
+      - link "设置" [ref=f22e32] [cursor=pointer]:
+        - /url: /settings
+    - generic [ref=f22e38]: edge-sync v0.1.0
+  - main [ref=f22e39]:
+    - generic [ref=f22e41]:
+      - alert [ref=f22e42]:
+        - generic [ref=f22e46]: 1 个任务 · 0 同步中 · 服务正常轮询中
+      - generic [ref=f22e48]:
+        - generic [ref=f22e49]:
+          - generic [ref=f22e50]: demo
+          - generic [ref=f22e51]: 正常
+          - paragraph [ref=f22e55]: local · 每 1m0s
+          - paragraph [ref=f22e56]: 上次成功：1 小时前
+          - generic [ref=f22e57]: 下次运行：06:34:17
+        - generic [ref=f22e58]:
+          - button "立即同步" [ref=f22e59] [cursor=pointer]
+          - button "详情" [ref=f22e60] [cursor=pointer]
