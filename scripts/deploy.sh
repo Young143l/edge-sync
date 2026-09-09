@@ -123,8 +123,10 @@ cat > "$STAGE/etc/panel.json.example" <<EOF
 {
   "port": 8080,
   "bind": "0.0.0.0",
+  "token": "",
   "socket": "$REMOTE/var/edge-syncd.sock",
-  "dataDir": "$REMOTE/data"
+  "dataDir": "$REMOTE/data",
+  "webDir": "$REMOTE/panel"
 }
 EOF
 
