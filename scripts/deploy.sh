@@ -40,6 +40,7 @@ case "$TARGET" in
 esac
 PANEL="${PANEL:-$PANEL_DEF}"
 REMOTE=/opt/edge-sync
+SSH_USER="${HOST%%@*}"
 
 echo "[deploy] target=$TARGET arch=$GOARCH${GOARM:+v$GOARM} panel=$PANEL dryRun=$DRY_RUN"
 
@@ -79,6 +80,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=$REMOTE
+User=$SSH_USER
 ExecStart=$REMOTE/bin/edge-syncd -config $REMOTE/etc/config.yaml
 Restart=always
 RestartSec=5
