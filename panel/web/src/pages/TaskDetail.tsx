@@ -184,7 +184,12 @@ function OverviewTab(props: {
   )
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '3fr 2fr' }, gap: 2 }}>
+    <Box sx={{
+      display: 'grid',
+      gridTemplateColumns: { xs: '1fr', md: 'minmax(320px, 520px) minmax(280px, 1fr)' },
+      gap: 2,
+      alignItems: 'start',
+    }}>
       <Paper variant="outlined" sx={{ p: 2 }}>
         <Typography variant="h6" sx={{ mb: 1.5, fontSize: 16 }}>
           版本时间线

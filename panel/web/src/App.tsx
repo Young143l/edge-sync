@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router'
 import {
   Button,
@@ -25,6 +25,18 @@ export function App(): React.JSX.Element {
     setAuthed(false)
     setLoginOpen(true)
   })
+
+  // 升级兼容：旧会话只有 localStorage token 没有 cookie，页面加载时自动补种
+  // （否则 <a href> 下载会 401）。
+  useEffect(() => {
+    const t = getToken()
+    if (t) {
+      void loginWithToken(t).catch(() => {
+        setAuthed(false)
+        setLoginOpen(true)
+      })
+    }
+  }, [])
 
   const submitToken = (t: string): void => {
     loginWithToken(t)

@@ -1,0 +1,32 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e3]:
+    - banner [ref=f2e4]:
+      - generic [ref=f2e5]:
+        - heading [level=6] [ref=f2e6]: edge-sync
+        - button [ref=f2e7] [cursor=pointer]
+        - button [ref=f2e10] [cursor=pointer]
+    - generic [ref=f2e14]:
+      - list [ref=f2e16]:
+        - link [ref=f2e17] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f2e21]: 仪表盘
+        - link [ref=f2e23] [cursor=pointer]:
+          - /url: /logs
+          - generic [ref=f2e27]: 日志
+        - link [ref=f2e29] [cursor=pointer]:
+          - /url: /settings
+          - generic [ref=f2e33]: 设置
+      - generic [ref=f2e35]: edge-sync v0.1.0
+    - main [ref=f2e36]
+  - dialog [ref=f2e40]:
+    - heading "访问令牌" [level=2] [ref=f2e41]
+    - generic [ref=f2e42]:
+      - paragraph [ref=f2e43]: 输入面板访问令牌（见 etc/panel.json）
+      - generic [ref=f2e44]:
+        - generic [ref=f2e45]: token
+        - generic [ref=f2e46]:
+          - textbox "token" [active] [ref=f2e47]
+          - group [aria-hidden]:
+            - generic: token
+    - generic [ref=f2e48]:
+      - button "确定" [disabled]
