@@ -11,13 +11,16 @@
 
 | 目录 | 内容 |
 |---|---|
-| `kernel/` | Go 内核 edge-syncd（调度 / diff / 原子应用 / IPC） |
-| `plugins/` | 官方插件（plugin-git / plugin-webdav），Go 独立二进制 |
-| `protocol/` | 插件协议 JSON Schema + TS 类型（双侧对齐的单一真源） |
-| `cli/` | TS CLI（配置编辑 / 手动触发 / 导出恢复） |
-| `panel/` | Web 面板（server: Node+Hono；web: Vite+React+MUI） |
-| `scripts/` | 部署助手（交叉编译 / rsync / systemd） |
-| `docs/` | 设计方案与执行清单 |
+| `cmd/edge-syncd` | 内核入口（调度 / diff / 原子应用 / IPC） |
+| `cmd/edge-panel` | Web 面板 server（Go，纯静态二进制） |
+| `cmd/edge-sync` | CLI（Go） |
+| `internal/` | 内核内部包（config/engine/ipc/plugin/runner/state/logring） |
+| `plugins/` | 插件：plugin-git（SSH/HTTPS）、plugin-local（本地目录源） |
+| `archive/plugin-webdav/` | WebDAV 插件（已实现，暂不打包部署） |
+| `pkg/` | 共享包：protocol（协议与 IPC 类型单一真源）、pluginkit |
+| `panel/web/` | 面板前端（Vite + React + MUI，teal，明暗） |
+| `scripts/deploy.sh` | 部署助手（双目标：rpi2 / qwifi；rsync + systemd） |
+| `docs/` | 设计方案 / 验收报告 / 执行清单 |
 
 ## 文档
 
