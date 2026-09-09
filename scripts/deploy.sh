@@ -54,7 +54,7 @@ mkdir -p "$STAGE/bin" "$STAGE/panel" "$STAGE/etc" "$STAGE/docs"
 # 1) Go 交叉编译（静态二进制）
 BINS=(
   "cmd/edge-syncd|edge-syncd"
-  "panel/cmd/edge-panel|edge-panel"
+  "cmd/edge-panel|edge-panel"
   "cmd/edge-sync|edge-sync"
   "plugins/plugin-local|plugin-local"
   "plugins/plugin-git|plugin-git"
@@ -107,6 +107,8 @@ Requires=edge-syncd.service
 Type=simple
 WorkingDirectory=$REMOTE
 User=$SSH_USER
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 ExecStart=$REMOTE/bin/edge-panel -c $REMOTE/etc/panel.json
 Restart=always
 RestartSec=5
