@@ -1,6 +1,50 @@
+<div align="center">
+  <img src="assets/logo.svg" width="160" alt="edge-sync logo">
+
 # edge-sync
 
-边缘同步备份服务，运行于树莓派 2B（ARMv7 / 1GB RAM）。
+**边缘设备上的插件化同步备份服务**
+
+为树莓派等低功耗设备设计：插件化监听远端源，轮询检测变更后单向拉取，
+硬链接快照保留历史版本，局域网内经 Web 面板 / CLI / 文件系统取回。
+
+`Go` · `armv7 / arm64` · `无需运行时依赖` · `~9MB 内存`
+
+</div>
+
+---
+
+## 特性
+
+- **插件化源适配**：Git（SSH/HTTPS，支持私有仓库 deploy key）、本地目录；外部进程协议，任意语言 ~200 行即可接入
+- **硬链接快照历史**：`current` 符号链接原子切换，版本间未变更文件零额外占用，断电永不出现半成品镜像
+- **双重保留策略**：keepLast（数量）+ keepDays（天数）自动滚动清理
+- **Web 面板**：Material Design（teal），明暗主题，移动端适配；单文件下载 / 整版本 zip / 单文件历史
+- **CLI**：13 命令（交互式向导、配置编辑、手动触发、导出恢复）
+- **纯 Go 静态二进制**：内核 9.5MB + 面板 7.2MB（armv7 实测），目标机零运行时依赖
+
+## 架构
+
+```
+浏览器(React SPA) ──HTTP──► edge-panel(Go) ──unix socket──► edge-syncd(Go内核)
+                                                              │ 按需 spawn
+U盘/scp ──直读──► /opt/edge-sync/data/<task>/{current→versions/}  plugin-git · plugin-local
+```
+
+## 快速开始
+
+```bash
+# 开发机构建并部署（树莓派 2B）
+./scripts/deploy.sh --target rpi2 --host user@<设备IP> --token <面板令牌>
+
+# 设备上添加任务（交互式向导）
+/opt/edge-sync/bin/edge-sync -c /opt/edge-sync/etc/config.yaml add
+
+# 面板
+浏览器打开 http://<设备IP>
+```
+
+更多见下方「部署手册」与 `docs/`。
 
 - 监听远端源（Git / WebDAV / 插件可扩展），轮询检测变更后单向拉取到本地
 - 硬链接快照保留历史版本（keepLast 数量限制 + keepDays）

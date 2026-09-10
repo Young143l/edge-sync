@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4DB6AC"/>
+      <stop offset="100%" stop-color="#00695C"/>
+    </linearGradient>
+  </defs>
+  <!-- 深色圆角背景 -->
+  <rect x="8" y="8" width="224" height="224" rx="52" fill="#10201E"/>
+  <!-- 同步循环：两支弧形箭头首尾相接 -->
+  <g fill="none" stroke="url(#teal)" stroke-width="16" stroke-linecap="round">
+    <path d="M 120 62 A 58 58 0 0 1 178 120"/>
+    <path d="M 120 178 A 58 58 0 0 1 62 120"/>
+  </g>
+  <!-- 箭头（顺时针切线方向） -->
+  <polygon points="178,98 178,142 202,120" fill="#4DB6AC"/>
+  <polygon points="62,142 62,98 38,120" fill="#4DB6AC"/>
+  <!-- 中心节点（边缘设备） -->
+  <circle cx="120" cy="120" r="16" fill="url(#teal)"/>
+  <circle cx="120" cy="120" r="6" fill="#10201E"/>
+</svg>
