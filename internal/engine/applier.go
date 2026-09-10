@@ -40,7 +40,7 @@ type ApplyInput struct {
 // Apply 组装新版本目录并原子切换 current，返回新版本目录路径。
 func Apply(in ApplyInput) (string, error) {
 	versionsDir := filepath.Join(in.DataDir, "versions")
-	newDir, err := nextVersionDir(versionsDir, time.Now().UTC())
+	newDir, err := nextVersionDir(versionsDir, time.Now())
 	if err != nil {
 		return "", err
 	}

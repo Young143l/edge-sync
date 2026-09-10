@@ -343,6 +343,8 @@ func timeoutCtx(ctx context.Context, d time.Duration) (context.Context, context.
 func (r *Runner) recordNoChange(t *config.Task, st *state.TaskState, snap *protocol.Manifest) {
 	st.ManifestFingerprint = snap.ManifestFingerprint
 	st.LastSyncAt = time.Now().UTC().Format(time.RFC3339)
+	st.ConsecutiveFailures = 0
+	st.Stats.TotalSyncs++
 	if err := r.store.Save(t.Name, st); err != nil {
 		r.log.Error("save state", "task", t.Name, "err", err)
 	}

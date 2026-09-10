@@ -207,8 +207,11 @@ func TestEndToEndNoChangeShortCircuit(t *testing.T) {
 		t.Fatalf("no-change round must not create version, got %d", len(versions))
 	}
 	st := e.stateOf(t)
-	if st.Stats.TotalSyncs != 1 {
-		t.Fatalf("totalSyncs = %d, want 1 (no-change round not counted)", st.Stats.TotalSyncs)
+	if st.Stats.TotalSyncs != 2 {
+		t.Fatalf("totalSyncs = %d, want 2 (no-change round counts as a successful poll)", st.Stats.TotalSyncs)
+	}
+	if st.ConsecutiveFailures != 0 {
+		t.Fatalf("consecutiveFailures = %d, want 0 (successful poll resets counter)", st.ConsecutiveFailures)
 	}
 }
 

@@ -62,7 +62,7 @@ func timeAgo(iso string) string {
 	if err != nil {
 		return iso
 	}
-	d := time.Since(t)
+	d := time.Since(t.Local())
 	switch {
 	case d < time.Minute:
 		return fmt.Sprintf("%d 秒前", max(1, int(d.Seconds())))
@@ -80,7 +80,7 @@ func shortTime(iso string) string {
 	if err != nil {
 		return iso
 	}
-	return t.Format("01-02 15:04:05")
+	return t.Local().Format("01-02 15:04:05")
 }
 
 func max(a, b int) int {

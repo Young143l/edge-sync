@@ -168,7 +168,8 @@ ssh "$HOST" "
   sudo cp $REMOTE/edge-syncd.service $REMOTE/edge-panel.service /etc/systemd/system/
   sudo systemctl daemon-reload
   sudo systemctl enable --now edge-syncd
-  $([ "$PANEL" = "always" ] && echo 'sudo systemctl enable --now edge-panel')
+  sudo systemctl restart edge-syncd   # 二进制已更新，重启以加载新版本
+  $([ "$PANEL" = "always" ] && echo 'sudo systemctl enable --now edge-panel && sudo systemctl restart edge-panel')
   systemctl is-active edge-syncd
   sleep 1
   curl -s -o /dev/null -w 'panel http: %{http_code}\n' http://127.0.0.1:$PORT/ || true
