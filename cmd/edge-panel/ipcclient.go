@@ -98,6 +98,13 @@ func (c *IPCClient) status(ctx context.Context, name string) (protocol.TaskDetai
 	return out, err
 }
 
+func (c *IPCClient) shutdown(ctx context.Context) error {
+	var out struct {
+		OK bool `json:"ok"`
+	}
+	return c.call(ctx, "sys.shutdown", map[string]any{}, &out)
+}
+
 func (c *IPCClient) trigger(ctx context.Context, name string) error {
 	return c.call(ctx, "task.trigger", map[string]any{"name": name}, nil)
 }

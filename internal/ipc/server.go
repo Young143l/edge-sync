@@ -130,6 +130,19 @@ func errResp(id int64, code int, msg string) *protocol.Response {
 		Error: &protocol.Error{Code: code, Message: msg}}
 }
 
+// sysShutdown 优雅停止内核（响应返回后异步执行）：取消所有任务上下文并退出进程，
+// 由 systemd Restart=always 拉起——面板「重启内核」的通路。
+func (s *Server) sysShutdown(req *protocol.Request) *protocol.Response {
+	s.deps.Log.Info("shutdown requested via IPC")
+	go func() {
+		time.Sleep(100 * time.Millisecond) // 让响应先送达
+		s.deps.Runner.Stop()
+		os.Exit(0)
+	}()
+	raw, _ := json.Marshal(map[string]any{"ok": true})
+	return &protocol.Response{ID: req.ID, Result: raw}
+}
+
 // dispatch 方法路由。
 func (s *Server) dispatch(req *protocol.Request) *protocol.Response {
 	switch req.Method {
@@ -151,6 +164,8 @@ func (s *Server) dispatch(req *protocol.Request) *protocol.Response {
 		return s.logTail(req)
 	case "plugin.list":
 		return s.pluginList(req)
+	case "sys.shutdown":
+		return s.sysShutdown(req)
 	case "event.subscribe":
 		return errResp(req.ID, protocol.CodeMethodNotFound, "event.subscribe not implemented yet (poll log.tail instead)")
 	default:

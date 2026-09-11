@@ -51,6 +51,10 @@ func (s *panelServer) routes() http.Handler {
 	mux.HandleFunc("GET /api/tasks/{name}/archive", auth(s.handleArchive))
 	mux.HandleFunc("GET /api/logs", auth(s.handleLogs))
 	mux.HandleFunc("GET /api/plugins", auth(s.handlePlugins))
+	mux.HandleFunc("GET /api/settings/info", auth(s.handleSettingsInfo))
+	mux.HandleFunc("POST /api/settings/cache/clear", auth(s.handleCacheClear))
+	mux.HandleFunc("POST /api/settings/restart-panel", auth(s.handlePanelRestart))
+	mux.HandleFunc("POST /api/settings/restart-syncd", auth(s.handleSyncdRestart))
 
 	// 静态托管 + SPA fallback（无 /api 前缀）。
 	mux.HandleFunc("/", s.handleStatic)

@@ -4,6 +4,8 @@
  * 503 / 网络错误 → offline 语义（离线横幅）。
  */
 
+import type { SettingsInfo } from '@edge-sync/protocol'
+
 const TOKEN_KEY = 'edge-sync-token'
 
 export function getToken(): string {
@@ -75,4 +77,24 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
     throw new ApiError(resp.status, msg, resp.status === 503)
   }
   return (await resp.json()) as T
+}
+
+export async function fetchSettingsInfo(): Promise<SettingsInfo> {
+  return api<SettingsInfo>('/api/settings/info')
+}
+
+export async function clearPluginCache(task: string): Promise<void> {
+  await api<{ ok: boolean }>('/api/settings/cache/clear', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task }),
+  })
+}
+
+export async function restartPanel(): Promise<void> {
+  await api<{ ok: boolean; message: string }>('/api/settings/restart-panel', { method: 'POST' })
+}
+
+export async function restartSyncd(): Promise<void> {
+  await api<{ ok: boolean; message: string }>('/api/settings/restart-syncd', { method: 'POST' })
 }

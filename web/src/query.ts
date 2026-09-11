@@ -5,6 +5,7 @@ import type {
   FileVersionEntry,
   LogEntry,
   PluginInfo,
+  SettingsInfo,
   TaskDetail,
   TaskSummary,
   VersionInfo,
@@ -15,6 +16,7 @@ export type {
   FileVersionEntry,
   LogEntry,
   PluginInfo,
+  SettingsInfo,
   TaskDetail,
   TaskSummary,
   VersionInfo,
@@ -107,3 +109,32 @@ export function useSync(name: string | undefined) {
 }
 
 export { useQueryClient }
+
+export function useSettingsInfo() {
+  return useQuery({
+    queryKey: ['settings'],
+    queryFn: () => api<SettingsInfo>('/api/settings/info'),
+    staleTime: 10_000,
+  })
+}
+
+export function useClearCache() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (task: string) =>
+      api<{ ok: boolean }>('/api/settings/cache/clear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task }),
+      }),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ['settings'] }),
+  })
+}
+
+export function usePanelRestart() {
+  return useMutation({ mutationFn: () => api<{ ok: boolean }>('/api/settings/restart-panel', { method: 'POST' }) })
+}
+
+export function useSyncdRestart() {
+  return useMutation({ mutationFn: () => api<{ ok: boolean }>('/api/settings/restart-syncd', { method: 'POST' }) })
+}

@@ -60,3 +60,21 @@ export interface LogEntry {
   msg: string
   attrs?: string
 }
+
+// ---------- 设置页（GET /api/settings/info） ----------
+
+export interface TaskStorage {
+  name: string
+  versions: number
+  dataBytes: number
+  cacheBytes: number
+}
+
+export interface SettingsInfo {
+  panelVersion: string
+  goVersion: string
+  /** 内核启动时间（socket 文件 mtime 近似），ISO8601 UTC */
+  syncdStartedAt?: string
+  totalDataBytes: number
+  tasks: TaskStorage[]
+}
